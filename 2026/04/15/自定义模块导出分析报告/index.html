@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="​        年初接手了同事开发的一个AI分析报告的功能，在此基础上，需要实现勾选任意预设指标来生成对应指标的分析报告功能。好的，话不多说，先来熟悉下之前的代码，梳理下需求。经过两天的挣扎，发现因为报告还需要下载成每页 A4 尺寸的 PDF，所以之前的同事把每页的内容都固定了，比如第一页内容是 [模块1，模块2]，第二页的内容是 [模块2.1] …，很显然如果现在要改为勾选任意指标来生成报告的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实战复盘：AI 分析报告的动态排版与自适应分页方案">
+<meta property="og:url" content="http://example.com/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="​        年初接手了同事开发的一个AI分析报告的功能，在此基础上，需要实现勾选任意预设指标来生成对应指标的分析报告功能。好的，话不多说，先来熟悉下之前的代码，梳理下需求。经过两天的挣扎，发现因为报告还需要下载成每页 A4 尺寸的 PDF，所以之前的同事把每页的内容都固定了，比如第一页内容是 [模块1，模块2]，第二页的内容是 [模块2.1] …，很显然如果现在要改为勾选任意指标来生成报告的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-15T07:10:00.000Z">
+<meta property="article:modified_time" content="2026-04-15T06:27:05.029Z">
+<meta property="article:author" content="yangq">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="DOM 操作">
+<meta property="article:tag" content="递归算法">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/","path":"2026/04/15/自定义模块导出分析报告/","title":"实战复盘：AI 分析报告的动态排版与自适应分页方案"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>实战复盘：AI 分析报告的动态排版与自适应分页方案 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%8B%86%E5%88%86%E6%A8%A1%E5%9D%97"><span class="nav-text">1. 拆分模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AE%A1%E7%AE%97%E5%88%86%E9%A1%B5%E5%90%8E%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-text">2. 计算分页后的模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%8A%A5%E5%91%8A%E9%87%8D%E6%96%B0%E6%8E%92%E7%89%88%E5%B8%83%E5%B1%80"><span class="nav-text">3. 报告重新排版布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%A4%84%E7%90%86-echarts-%E5%9B%BE%E8%A1%A8"><span class="nav-text">4. 处理 echarts 图表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-text">5 其他类型处理？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E4%BF%AE%E6%AD%A3-selectedReportModuleIds"><span class="nav-text">6. 修正 selectedReportModuleIds</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%8E%92%E7%89%88%E5%90%8E%E7%9A%84%E6%8A%A5%E5%91%8A%E5%BA%8F%E5%8F%B7%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0"><span class="nav-text">7. 排版后的报告序号动态更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E5%85%B6%E4%BB%96"><span class="nav-text">8. 其他</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangq</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:yangq0979@gmail.com" title="E-Mail → mailto:yangq0979@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="实战复盘：AI 分析报告的动态排版与自适应分页方案 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实战复盘：AI 分析报告的动态排版与自适应分页方案
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-04-15 15:10:00 / 修改时间：14:27:05" itemprop="dateCreated datePublished" datetime="2026-04-15T15:10:00+08:00">2026-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>​        年初接手了同事开发的一个AI分析报告的功能，在此基础上，需要实现勾选任意预设指标来生成对应指标的分析报告功能。好的，话不多说，先来熟悉下之前的代码，梳理下需求。经过两天的挣扎，发现因为报告还需要下载成每页 A4 尺寸的 PDF，所以之前的同事把每页的内容都固定了，比如第一页内容是 [模块1，模块2]，第二页的内容是 [模块2.1] …，很显然如果现在要改为勾选任意指标来生成报告的话，之前的这种写法很明显不符合要求了。于是开始了第一步拆分模块。</p>
+<h4 id="1-拆分模块"><a href="#1-拆分模块" class="headerlink" title="1. 拆分模块"></a>1. 拆分模块</h4><p>之前的分析报告总共有 34 页，每页有若干个模块，于是开始了漫漫拆分之路。</p>
+<p>梳理需求发现分析指标总共有4个一级指标，17个二级指标，37个二级指标，整体是一个树形结构。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分析指标</span></span><br><span class="line"><span class="keyword">const</span> reportModules = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 一级指标</span></span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">	<span class="attr">label</span>: <span class="string">&#x27;xx1&#x27;</span>,</span><br><span class="line">        <span class="attr">children</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 二级指标</span></span><br><span class="line">                <span class="attr">id</span>: <span class="string">&#x27;1-1&#x27;</span>,</span><br><span class="line">                <span class="attr">label</span>: <span class="string">&#x27;xx1-1&#x27;</span>,</span><br><span class="line">                <span class="attr">children</span>: [</span><br><span class="line">                    <span class="comment">// 三级指标</span></span><br><span class="line">                    &#123;<span class="attr">id</span>: <span class="string">&#x27;1-1-1&#x27;</span>, <span class="attr">label</span>: <span class="string">&#x27;xx1-1-1&#x27;</span>&#125;,</span><br><span class="line">                    ...</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            ...</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>定义变量 <code>selectedReportModuleIds</code> 保存勾选的指标 <code>id</code> ，模板里拆分模块的结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;original-report-structure&quot;&gt;</span><br><span class="line">    &lt;!-- 使用 v-show 是考虑到在第一次调用接口后分析报告内容就不会再变了，后续只是显示与否切换 --&gt;</span><br><span class="line">    &lt;div v-show=&quot;selectedReportModuleIds.includes(&#x27;1&#x27;)&quot; class=&quot;module module-1&quot;&gt;</span><br><span class="line">        &lt;!-- 这里是模块内容 --&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div v-show=&quot;selectedReportModuleIds.includes(&#x27;1-1&#x27;)&quot; class=&quot;module module-1-1&quot;&gt;&lt;/div&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>因为每页的高度固定，所以当一个模块内容高度超过一页高度时，需要将其拆分为多个子模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 总模块内容高度过高，拆分成多个子模块 --&gt;</span><br><span class="line">&lt;div v-show=&quot;selectedReportModuleIds.includes(&#x27;2-1-1&#x27;)&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;module module-2-1-1&quot;&gt;...&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;module module-2-1-1&quot;&gt;...&lt;/div&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>好的，至此所有模块已经拆分完毕！</p>
+<h4 id="2-计算分页后的模块"><a href="#2-计算分页后的模块" class="headerlink" title="2. 计算分页后的模块"></a>2. 计算分页后的模块</h4><p>拆分后的模块渲染完毕后即可计算分页模块。遍历所有的 <code>module</code> 类，调用 <code>getBoundingClientRect</code>  获取精确高度（<code>px</code>），已知每页内容区域高度阈值，那么就可以算出每页存放哪些 <code>modules</code> ，将其存放在变量 <code>pagedModules</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">groupModules</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> modules = <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">originalReportStructure</span>?.<span class="property">querySelectorAll</span>?.(<span class="string">&#x27;[class^=&quot;module&quot;]&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> currentGroup = []</span><br><span class="line">  <span class="keyword">let</span> currentHeight = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  modules.<span class="title function_">forEach</span>(<span class="function"><span class="params">module</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用 getBoundingClientRect 获取精确高度（px）</span></span><br><span class="line">    <span class="keyword">const</span> rect = <span class="variable language_">module</span>.<span class="title function_">getBoundingClientRect</span>()</span><br><span class="line">    <span class="keyword">const</span> height = rect.<span class="property">height</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (height === <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判定是否添加到当前组 （thresholdPx：每页内容区域高度阈值）</span></span><br><span class="line">    <span class="keyword">if</span> (currentHeight + height &lt;= thresholdPx) &#123;</span><br><span class="line">      <span class="comment">// 使用 cloneNode 克隆模块并添加到当前组</span></span><br><span class="line">      currentGroup.<span class="title function_">push</span>(<span class="variable language_">module</span>.<span class="title function_">cloneNode</span>(<span class="literal">true</span>))</span><br><span class="line">      currentHeight += height</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// push 当前组（可能为空，但我们避免 push 空组）</span></span><br><span class="line">      <span class="keyword">if</span> (currentGroup.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">pagedModules</span>.<span class="title function_">push</span>(currentGroup)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 开始新的组并添加当前模块</span></span><br><span class="line">      currentGroup = [<span class="variable language_">module</span>.<span class="title function_">cloneNode</span>(<span class="literal">true</span>)]</span><br><span class="line">      currentHeight = height</span><br><span class="line"></span><br><span class="line">      <span class="comment">// edge: 如果单个模块本身就大于 thresholdPx(理论上这个时候就应该再细分模块)，这个模块将单独成组（上面已经处理）</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加最后一组（如果有未存储的模块）</span></span><br><span class="line">  <span class="keyword">if</span> (currentGroup.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">pagedModules</span>.<span class="title function_">push</span>(currentGroup)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-报告重新排版布局"><a href="#3-报告重新排版布局" class="headerlink" title="3. 报告重新排版布局"></a>3. 报告重新排版布局</h4><p>拿到 <code>pagedModules</code> 后即可以渲染排版后的报告</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--排版后的报告--&gt;</span><br><span class="line">&lt;div class=&quot;formatted-report-structure&quot;&gt;</span><br><span class="line">    &lt;div v-for=&quot;(page, index) in pagedModules&quot; :key=&quot;index&quot; class=&quot;report-page&quot;&gt;</span><br><span class="line">    	&lt;div v-for=&quot;(module, moduleIndex) in page&quot; :key=&quot;moduleIndex&quot; v-html=&quot;module.outerHTML&quot;/&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​        好的，感觉成了，现在去页面看效果，第一页正常，第二页也正常。唉，第三页怎么有一块没出来，再去瞅瞅之前的版本，发现这块是一个 <code>echarts</code> 图表。啊，好吧，那我们再去改造一下。</p>
+<h4 id="4-处理-echarts-图表"><a href="#4-处理-echarts-图表" class="headerlink" title="4. 处理 echarts 图表"></a>4. 处理 <code>echarts</code> 图表</h4><p>回到第一步拆分模块，处理图表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 图表类的结构保持相同，使用 echarts-module 类标记，后面拼接的是 moduleId --&gt;</span><br><span class="line">&lt;div class=&quot;module module-2-2-3 echarts-module-2-2-3&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;chartBox&quot;&gt;</span><br><span class="line">    &lt;!-- dofar-charts 是封装的一个公共组件类 --&gt;</span><br><span class="line">    &lt;dofar-charts</span><br><span class="line">      ref=&quot;chart2&quot;</span><br><span class="line">      :chart-data=&quot;option1&quot;</span><br><span class="line">      :height=&quot;&#x27;0.9896rem&#x27;&quot;</span><br><span class="line">      :width=&quot;&#x27;100%&#x27;&quot;</span><br><span class="line">    /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>来到第三步重新排版布局时，发现每个图表都需要且有可能不同的属性有 <code>chartData</code> 、<code>height</code> 、<code>width</code> ，因此定义变量 <code>moduleChartMap</code> 保存每个图表的属性值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moduleChartMap = &#123;</span><br><span class="line">    <span class="comment">// [echarts-module key]: [chartData, width, height]</span></span><br><span class="line">    <span class="string">&#x27;2-2-3&#x27;</span>: [<span class="variable language_">this</span>.<span class="property">option1</span>, <span class="string">&#x27;100%&#x27;</span>, <span class="string">&#x27;0.9896rem&#x27;</span>],</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来可以重新排版了，调整代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--排版后的报告--&gt;</span><br><span class="line">&lt;div class=&quot;formatted-report-structure&quot;&gt;</span><br><span class="line">    &lt;div v-for=&quot;(page, index) in pagedModules&quot; :key=&quot;index&quot; class=&quot;report-page&quot;&gt;</span><br><span class="line">        &lt;template v-for=&quot;(module, moduleIndex) in page&quot;&gt;</span><br><span class="line">	    &lt;!--echarts 图表--&gt;</span><br><span class="line">            &lt;div v-if=&quot;isChartModule(module)&quot; :key=&quot;moduleIndex + &#x27;-1&#x27;&quot; :class=&quot;getModuleClasses(module)&quot;&gt;</span><br><span class="line">              &lt;div class=&quot;chartBox&quot;&gt;</span><br><span class="line">                &lt;dofar-charts</span><br><span class="line">                  :chart-data=&quot;moduleChartMap[getChartModuleKey(module)][0]&quot;</span><br><span class="line">                  :width=&quot;moduleChartMap[getChartModuleKey(module)][1]&quot;</span><br><span class="line">                  :height=&quot;moduleChartMap[getChartModuleKey(module)][2]&quot;</span><br><span class="line">                /&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;!--普通 DOM 结构--&gt;</span><br><span class="line">            &lt;div v-else :key=&quot;moduleIndex + &#x27;-2&#x27;&quot; v-html=&quot;module.outerHTML&quot;/&gt;</span><br><span class="line">        &lt;/template&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中用到了两个方法</p>
+<p> <code>isChartModule(module)</code> ：已知图表类型的模块都有 <code>echarts-module</code> 类，可以以此判断是否是图表类型</p>
+<p><code>getChartModuleKey(module)</code> ：明确了确实是图表类型的话，就可以从类名中取出 <code>moduleId</code></p>
+<h4 id="5-其他类型处理？"><a href="#5-其他类型处理？" class="headerlink" title="5 其他类型处理？"></a>5 其他类型处理？</h4><p>第四步单独处理了图表类型，由此可以推断，假如日后有其他既不是图表，也不是普通 <code>DOM</code> 结构类型的也需要单独处理，步骤与第四步类似。</p>
+<h4 id="6-修正-selectedReportModuleIds"><a href="#6-修正-selectedReportModuleIds" class="headerlink" title="6. 修正 selectedReportModuleIds"></a>6. 修正 <code>selectedReportModuleIds</code></h4><p>最开始 <code>selectedReportModuleIds</code> 保存的是勾选的指标 <code>id</code> ，检查页面时发现假如只选中了三级指标，那么其所属的二级、一级指标不会显示，这显然不符合要求。</p>
+<p>所以 <code>selectedReportModuleIds</code> 应该包含两部分：全选 + 半选中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全选 moduleIds</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">checkedReportModuleIds</span> = <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">moduleTree</span>?.<span class="property">getCheckedKeys</span>?.() ?? []</span><br><span class="line"></span><br><span class="line"><span class="comment">// 半选 moduleIds</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">halfCheckedReportModuleIds</span> = <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">moduleTree</span>?.<span class="property">getHalfCheckedKeys</span>?.() ?? []</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算属性</span></span><br><span class="line"><span class="title function_">selectedReportModuleIds</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="variable language_">this</span>.<span class="property">checkedReportModuleIds</span>.<span class="title function_">concat</span>(<span class="variable language_">this</span>.<span class="property">halfCheckedReportModuleIds</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="7-排版后的报告序号动态更新"><a href="#7-排版后的报告序号动态更新" class="headerlink" title="7. 排版后的报告序号动态更新"></a>7. 排版后的报告序号动态更新</h4><p>已知需求要求每一层指标都需要有序号，类似 <code>1.</code>、 <code>1.1.</code>、 <code>1.1.1.</code>，且选择部分指标重新排版后序号需要动态更新。</p>
+<p>已知 <code>selectedReportModuleIds</code>（全选 + 半选 <code>moduleIds</code>）和 <code>reportModules</code> （全部节点树），可以得到全选和半选包含的节点树 <code>selectedReportModules</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算属性</span></span><br><span class="line"><span class="title function_">selectedReportModules</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 过滤出全选和半选包含的节点树</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">recurse</span> = (<span class="params"><span class="variable language_">module</span></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> children = (<span class="variable language_">module</span>.<span class="property">children</span>?.<span class="property">length</span> &gt; <span class="number">0</span>) ? (<span class="variable language_">module</span>.<span class="property">children</span>.<span class="title function_">map</span>(recurse).<span class="title function_">filter</span>(<span class="title class_">Boolean</span>)) : []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> keepSelf = <span class="variable language_">this</span>.<span class="property">selectedReportModuleIds</span>.<span class="title function_">includes</span>(<span class="variable language_">module</span>.<span class="property">id</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!keepSelf &amp;&amp; children.<span class="property">length</span> === <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回新节点（浅拷贝原始字段，children 为过滤后的 children）</span></span><br><span class="line">    <span class="keyword">const</span> newModule = &#123;...<span class="variable language_">module</span>&#125;</span><br><span class="line">    <span class="keyword">if</span> (children.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      newModule.<span class="property">children</span> = children</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果没有子节点可删除 children 字段</span></span><br><span class="line">      <span class="keyword">delete</span> newModule.<span class="property">children</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> newModule</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> filteredModules = <span class="variable language_">this</span>.<span class="property">reportModules</span>.<span class="title function_">map</span>(recurse).<span class="title function_">filter</span>(<span class="title class_">Boolean</span>)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 过滤的节点树添加序号</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">addSeq</span> = (<span class="params">modules, prefix = <span class="string">&#x27;&#x27;</span></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title class_">Array</span>.<span class="title function_">isArray</span>(modules)) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    modules.<span class="title function_">forEach</span>(<span class="function">(<span class="params"><span class="variable language_">module</span>, idx</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> seq = <span class="string">&#x27;&#x27;</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">module</span>.<span class="property">id</span> !== <span class="string">&#x27;all&#x27;</span>) &#123;</span><br><span class="line">        seq = prefix ? <span class="string">`<span class="subst">$&#123;prefix&#125;</span><span class="subst">$&#123;idx + <span class="number">1</span>&#125;</span>.`</span> : <span class="string">`<span class="subst">$&#123;idx + <span class="number">1</span>&#125;</span>.`</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">module</span>.<span class="property">seq</span> = seq</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(<span class="variable language_">module</span>.<span class="property">children</span>) &amp;&amp; <span class="variable language_">module</span>.<span class="property">children</span>.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 递归处理子节点</span></span><br><span class="line">        <span class="title function_">addSeq</span>(<span class="variable language_">module</span>.<span class="property">children</span>, seq)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="title function_">addSeq</span>(filteredModules, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> filteredModules</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拿到 <code>selectedReportModules</code> 后递归遍历便可以得到每个 <code>selectedModuleId</code> 对应的动态序号。</p>
+<h4 id="8-其他"><a href="#8-其他" class="headerlink" title="8. 其他"></a>8. 其他</h4><ol>
+<li><p>报告每页需要保持 <code>A4</code> 尺寸比例，且在不同屏幕宽度时需要自适应，定义如下三个基础变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">pageWidthRem</span>: <span class="string">&#x27;3.099rem&#x27;</span>,</span><br><span class="line">      	<span class="attr">pageVerticalPaddingRem</span>: <span class="string">&#x27;0.4167rem&#x27;</span>,</span><br><span class="line">      	<span class="attr">a4Ratio</span>: <span class="number">297</span> / <span class="number">210</span>,  <span class="comment">// A4 高:宽 比例（固定常量）</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>data</code> 中定义的变量可以在 <code>template</code> 、<code>script</code> 内使用，要想让其也可以在 <code>style</code> 内使用，需要将变量映射为 CSS 自定义属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算属性</span></span><br><span class="line"><span class="title function_">cssVars</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&#x27;--page-width-rem&#x27;</span>: <span class="variable language_">this</span>.<span class="property">pageWidthRem</span>,</span><br><span class="line">        <span class="string">&#x27;--a4-ratio&#x27;</span>: <span class="variable language_">this</span>.<span class="property">a4Ratio</span>,</span><br><span class="line">        <span class="string">&#x27;--page-vertical-padding-rem&#x27;</span>: <span class="variable language_">this</span>.<span class="property">pageVerticalPaddingRem</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将自定义属性绑定到根元素</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div :style=&quot;cssVars&quot;&gt;</span><br><span class="line">    	...</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>style</code> 内用类似 <code>var(--page-width-rem)</code> 的写法便可使用</p>
+</li>
+<li><p>何时进行重新排版操作？</p>
+<ul>
+<li><p>第一次调用接口拿到分析报告内容后</p>
+</li>
+<li><p>打开弹窗选择报告指标，点击确定后</p>
+</li>
+<li><p>任何影响报告内容的异步操作后</p>
+<p>例如报告中有一块展示的思维导图形式的内容，之前的同事先使用 <code>jsMind</code> 初始化渲染，完毕后又将其转成了一张图片放入 <code>DOM</code>，此时就需要调用重新排版的方法了</p>
+</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/DOM-%E6%93%8D%E4%BD%9C/" rel="tag"># DOM 操作</a>
+              <a href="/tags/%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95/" rel="tag"># 递归算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/15/%E5%88%86%E7%89%87%E4%B8%8A%E4%BC%A0+%E5%88%86%E7%89%87%E5%93%88%E5%B8%8C/" rel="prev" title="分片哈希+分片上传">
+                  <i class="fa fa-angle-left"></i> 分片哈希+分片上传
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangq</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
