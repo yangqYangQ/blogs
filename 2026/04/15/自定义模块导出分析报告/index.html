@@ -18,12 +18,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"yanggyangq.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yangqyangq.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="​        年初接手了同事开发的一个AI分析报告的功能，在此基础上，需要实现勾选任意预设指标来生成对应指标的分析报告功能。好的，话不多说，先来熟悉下之前的代码，梳理下需求。经过两天的挣扎，发现因为报告还需要下载成每页 A4 尺寸的 PDF，所以之前的同事把每页的内容都固定了，比如第一页内容是 [模块1，模块2]，第二页的内容是 [模块2.1] …，很显然如果现在要改为勾选任意指标来生成报告的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实战复盘：AI 分析报告的动态排版与自适应分页方案">
-<meta property="og:url" content="https://yanggyangq.github.io/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:url" content="https://yangqyangq.github.io/blogs/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="​        年初接手了同事开发的一个AI分析报告的功能，在此基础上，需要实现勾选任意预设指标来生成对应指标的分析报告功能。好的，话不多说，先来熟悉下之前的代码，梳理下需求。经过两天的挣扎，发现因为报告还需要下载成每页 A4 尺寸的 PDF，所以之前的同事把每页的内容都固定了，比如第一页内容是 [模块1，模块2]，第二页的内容是 [模块2.1] …，很显然如果现在要改为勾选任意指标来生成报告的">
 <meta property="og:locale" content="zh_CN">
@@ -36,10 +36,10 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yanggyangq.github.io/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+<link rel="canonical" href="https://yangqyangq.github.io/blogs/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yanggyangq.github.io/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/","path":"2026/04/15/自定义模块导出分析报告/","title":"实战复盘：AI 分析报告的动态排版与自适应分页方案"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yangqyangq.github.io/blogs/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/","path":"2026/04/15/自定义模块导出分析报告/","title":"实战复盘：AI 分析报告的动态排版与自适应分页方案"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>实战复盘：AI 分析报告的动态排版与自适应分页方案 | Hexo</title>
@@ -178,7 +178,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yanggyangq.github.io/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
