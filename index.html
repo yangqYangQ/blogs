@@ -75,6 +75,9 @@
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -95,6 +98,10 @@
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blogs/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/blogs/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/blogs/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
 
 
 
@@ -129,17 +136,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blogs/archives/">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span>
+          <a href="/blogs/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">标签</span>
+          <a href="/blogs/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -160,6 +169,440 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/009-Vue3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2026/04/19/009-Vue3/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-19 21:56:29" itemprop="dateCreated datePublished" datetime="2026-04-19T21:56:29+08:00">2026-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Composition-API"><a href="#Composition-API" class="headerlink" title="Composition API"></a>Composition API</h3><p>  <img src="/blogs/../assets/009/image-20230825171533325.png" alt="image-20230825171533325"></p>
+<h4 id="Reactivity"><a href="#Reactivity" class="headerlink" title="Reactivity"></a>Reactivity</h4><ul>
+<li><p><code>isRef</code> : 检查某个值是否为 ref</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">  function doFetch()&#123;</span><br><span class="line">    // doSomething</span><br><span class="line">  &#125;</span><br><span class="line">  if(isRef(val)) &#123;</span><br><span class="line">    //如果输入的val是一个ref，那么将启动一个响应式的请求</span><br><span class="line">    watchEffect(doFetch) // doFetch为一个方法名</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><code>isReactive</code> : 检查一个对象是否是由 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/reactivity-core.html#reactive"><code>reactive()</code></a> 或 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowreactive"><code>shallowReactive()</code></a> 创建的代理。</p>
+</li>
+<li><p><code>toRefs</code> : 将响应对象的<strong>可枚举属性</strong>转换为<strong>单独的响应式数据</strong>。<code>将对象中的每个属性都做一次ref操作，使每个属性都具有响应式</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; toRefs, reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const data = reactive(&#123;</span><br><span class="line">    name: &#x27;guoguo&#x27;,</span><br><span class="line">    age: &#x27;18&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line">  const dataRef = toRefs(data) //toRefs 使得data中所有属性具有响应式</span><br><span class="line">  const dataRef = ...toRefs(data) // 则失去了响应式  没看懂</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">    import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line">    </span><br><span class="line">    const firstName = ref(&#x27;first&#x27;)</span><br><span class="line">	const lastName = ref(&#x27;last&#x27;)</span><br><span class="line">	const uName = computed(() =&gt; &#123;</span><br><span class="line">  		return firstName.value + &#x27; &#x27; + lastName.value</span><br><span class="line">	&#125;) // uName 其实是个 ref</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">	import &#123; ref, watch &#125; from &#x27;vue&#x27;</span><br><span class="line">    </span><br><span class="line">    const age = ref(31)</span><br><span class="line">    </span><br><span class="line">    // 1</span><br><span class="line">    watch(age, function(newValue, oldValue)&#123;</span><br><span class="line">        const newAgeValue = newValue</span><br><span class="line">        const oldAgeValue = oldValue</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    // 2</span><br><span class="line">    watch([ref, computedRef, ...], function(newValues, oldValues)&#123;</span><br><span class="line">        const newRefValue = newValues[0]</span><br><span class="line">        const newComputedRefValue = newValues[1]</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="template-ref"><a href="#template-ref" class="headerlink" title="template ref"></a>template ref</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">	const inputRef = ref(null)   // inputRef.current 可以拿到组件实例</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;input ref=&quot;inputRef&quot;/&gt;	</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// 写法一 Options API</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123;computed&#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  props: [&#x27;firstName&#x27;, &#x27;lastName&#x27;],</span><br><span class="line">  setup(props) &#123;  // setup 只执行一次</span><br><span class="line">    const fullName = computed(() =&gt; &#123;  // props值有变化时，会执行computed回调</span><br><span class="line">      return props.firstName + &#x27; &#x27; + props.lastName</span><br><span class="line">    &#125;)</span><br><span class="line">    return &#123;fullName&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">// 写法二 Composition API</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123;computed&#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">// 仅 &lt;script setup&gt; 中可用的编译宏命令</span><br><span class="line">const props = defineProps(&#123;</span><br><span class="line">  firstName: String,</span><br><span class="line">  lastName: &#123;</span><br><span class="line">    type: String,</span><br><span class="line">    default: &#x27;&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const fullName = computed(() =&gt; &#123;</span><br><span class="line">  return props.firstName + &#x27; &#x27; + props.lastName</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="emits-events"><a href="#emits-events" class="headerlink" title="emits events"></a>emits events</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 写法一 Options API</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default&#123;</span><br><span class="line">    setup(props, context)&#123;</span><br><span class="line">        context.emit(&#x27;save-data&#x27;, 1)  // 等价于以前的写法 this.$emit(&#x27;save-data&#x27;, 1)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">// 写法二 Composition API</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">const emit = defineEmits(&#123;</span><br><span class="line">    &#x27;save-data&#x27;: null   // 没有校验</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">emit(&#x27;save-data&#x27;, 1)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="事件校验"><a href="#事件校验" class="headerlink" title="事件校验"></a>事件校验</h4><p><code>emits</code> 选项还支持对象语法，它允许我们对触发事件的参数进行验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">const emit = defineEmits(&#123;</span><br><span class="line">  // 没有校验</span><br><span class="line">  inFocus: null,</span><br><span class="line"></span><br><span class="line">  // 校验 submit 事件</span><br><span class="line">  submit: (&#123; email, password &#125;) =&gt; &#123;</span><br><span class="line">    if (email &amp;&amp; password) return true</span><br><span class="line">    else return false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">function submitForm(email, password) &#123;</span><br><span class="line">  emit(&#x27;submit&#x27;, &#123; email, password &#125;)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>不论校验是否通过，都会触发 <code>submit</code> 事件。</p>
+<p>校验不通过时，控制台显示如下 <code>warning</code> :</p>
+<blockquote>
+<p>[Vue warn]: Invalid event arguments: event validation failed for event “submit”.</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/008-TypeScript-5.1-translation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2026/04/19/008-TypeScript-5.1-translation/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-19 21:56:18" itemprop="dateCreated datePublished" datetime="2026-04-19T21:56:18+08:00">2026-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="undefined-返回函数的更简单隐式返回"><a href="#undefined-返回函数的更简单隐式返回" class="headerlink" title="undefined 返回函数的更简单隐式返回"></a>undefined 返回函数的更简单隐式返回</h4><p>在早期版本的 TypeScript 中，只有 <strong><code>void-</code></strong> 和 <strong><code>any-</code></strong> 返回函数可以不写 <code>return</code> 语句，这意味着即使一个函数返回 **<code>undefined</code>**，也必须显式写明 <code>return undefined</code>。</p>
+<p>TypeScript 5.1 允许返回 <code>undefined</code> 的函数没有 <code>return</code> 语句。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f4</span>(<span class="params"></span>): <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="title function_">takesFunction</span>((): <span class="function"><span class="params">undefined</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Getters-、Setters-不相关类型"><a href="#Getters-、Setters-不相关类型" class="headerlink" title="Getters 、Setters 不相关类型"></a>Getters 、Setters 不相关类型</h4><p> TypeScript 4.3 允许 <code>getter</code>、 <code>setter</code> 访问器可以指定两种不同的类型，但是 <code>getter</code> 类型必须是 <code>setter</code> 类型的子类型。 </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Serializer</span> &#123;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params"><span class="attr">v</span>: <span class="built_in">string</span> | <span class="built_in">number</span> | <span class="built_in">boolean</span></span>);</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">let</span> <span class="attr">box</span>: <span class="title class_">Serializer</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Allows writing a &#x27;boolean&#x27;</span></span><br><span class="line">box.<span class="property">value</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Comes out as a &#x27;string&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(box.<span class="property">value</span>.<span class="title function_">toUpperCase</span>());</span><br></pre></td></tr></table></figure>
+
+
+
+<p>TypeScript 5.1 现在允许 <code>getter</code> 、<code>setter</code> 可以有完全不相关的类型，前提是它们有显式的类型注释。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CSSStyleRule</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Always reads as a `CSSStyleDeclaration` */</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">style</span>(): <span class="title class_">CSSStyleDeclaration</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Can only write a `string` here. */</span></span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">style</span>(<span class="params"><span class="attr">newValue</span>: <span class="built_in">string</span></span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查"><a href="#JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查" class="headerlink" title="JSX Elements 和 JSX Tag 类型之间的解耦类型检查"></a><code>JSX Elements</code> 和 <code>JSX Tag</code> 类型之间的解耦类型检查</h4><p>对于 <code>JSX</code> 组件而言，会检查是否属于 <code>JSX.Element</code> 类型。</p>
+<p>但是 <code>React</code> 未来版本可能会支持返回 <code>promise</code> 的组件，如果不放宽 <code>JSX.Element</code> 类型，现有版本的 <code>TypeScript</code> 就无法表达这一点。</p>
+<p><code>TypeScript 5.1</code> 开始使用 <strong><code>JSX.ElementType</code></strong> 类型，可以精确指定什么可以作为 <code>JSX</code> tag。</p>
+<h4 id="带名称空间的-JSX-Attributes"><a href="#带名称空间的-JSX-Attributes" class="headerlink" title="带名称空间的 JSX Attributes"></a>带名称空间的 <code>JSX Attributes</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Both of these are equivalent:</span></span><br><span class="line"><span class="keyword">const</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a:b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a</span> <span class="attr">:</span> <span class="attr">b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">FooProps</span> &#123;</span><br><span class="line">    <span class="string">&quot;a:b&quot;</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Foo</span>(<span class="params"><span class="attr">props</span>: <span class="title class_">FooProps</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props[&quot;a:b&quot;]&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>带名称空间的 <code>tag</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In some library&#x27;s code or in an augmentation of that library:</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">JSX</span> &#123;</span><br><span class="line">    <span class="keyword">interface</span> <span class="title class_">IntrinsicElements</span> &#123;</span><br><span class="line">        [<span class="string">&quot;a:b&quot;</span>]: &#123; <span class="attr">prop</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In our code:</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">a:b</span> <span class="attr">prop</span>=<span class="string">&quot;hello!&quot;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>原文链接：<a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/">https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/007-Memorize-Game-With-Swift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2026/04/19/007-Memorize-Game-With-Swift/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-04-19 21:56:10 / 修改时间：21:56:11" itemprop="dateCreated datePublished" datetime="2026-04-19T21:56:10+08:00">2026-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="./007-Swift-study.md">上一级</a></p>
+<h1 id="Memorize-Game-With-Swift"><a href="#Memorize-Game-With-Swift" class="headerlink" title="Memorize Game With Swift"></a>Memorize Game With Swift</h1><h2 id="2-MVVM-和-Swift-类型"><a href="#2-MVVM-和-Swift-类型" class="headerlink" title="2. MVVM 和 Swift 类型"></a>2. MVVM 和 Swift 类型</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_ inherited__">View</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span>&#123;</span><br><span class="line">        <span class="type">HStack</span>&#123;</span><br><span class="line">            <span class="type">ForEach</span>(<span class="number">0</span><span class="operator">..&lt;</span><span class="number">4</span>)&#123; index <span class="keyword">in</span></span><br><span class="line">                  <span class="type">CardView</span>(isFaceUp: <span class="literal">true</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">            .padding()</span><br><span class="line">            .foregroundColor(<span class="type">Color</span>.orange)</span><br><span class="line">        	.font(<span class="type">Font</span>.largeTitle)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">CardView</span>: <span class="title class_ inherited__">View</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> isFaceUp: <span class="type">Bool</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span>&#123;</span><br><span class="line">        <span class="type">ZStack</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> isFaceUp &#123;</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).fill(<span class="type">Color</span>.white)</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).stroke(lineWidth: <span class="number">3</span>)</span><br><span class="line">                <span class="type">Text</span>()</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).fill()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2026/04/19/006-React-Rendering-Behavior/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-19 21:55:59" itemprop="dateCreated datePublished" datetime="2026-04-19T21:55:59+08:00">2026-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="../README.md">上一级</a></p>
+<h1 id="React-Rendering-行为"><a href="#React-Rendering-行为" class="headerlink" title="React Rendering 行为"></a>React Rendering 行为</h1><p>翻译自<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/">Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior</a></p>
+<p>[toc]</p>
+<h2 id="什么是-Rendering"><a href="#什么是-Rendering" class="headerlink" title="什么是 Rendering"></a>什么是 <code>Rendering</code></h2><p><strong><code>Rendering</code></strong> 是基于当前 <code>props</code> 和 <code>state</code> 组合，要求组件描述它们想要的 <code>UI</code> 样子的过程。</p>
+<h3 id="Rendering-过程概述"><a href="#Rendering-过程概述" class="headerlink" title="Rendering 过程概述"></a><code>Rendering</code> 过程概述</h3><p><code>React</code> 将从组件树的根开始，向下循环查找所有被标记成 <code>needing updates</code> 的组件。对于每个被标记的组件，<code>React</code> 会调用<code>classComponentInstance.render()</code> （对于 <code>class</code> 组件） 或者 <code>FunctionComponent()</code> （对于 <code>function</code> 组件），并保存输出结果。</p>
+<p>组件的 <code>render</code> 输出通常使用 <code>JSX</code> 语法编写，编译时会被转换成 <code>React.createElement()</code>。<code>createElement</code> 返回 <code>js</code> 对象，用于描述 <code>UI</code> 的预期结构。</p>
+<p>例子：</p>
+<p><img src="/blogs/../assets/006/convert-jsx.png" alt="jsx convert"></p>
+<p>在收集了整个组件树的 <code>render</code> 输出后，<code>React</code> 会比较 <code>current</code> 指向的组件树和 <code>work-in-progress</code> 指向的组件树，将所有的更新放到一个列表中。这种比较计算的过程叫做 <code>reconciliation</code> 。</p>
+<p>最后更新 <code>DOM</code>。</p>
+<h3 id="Render-和-Commit-阶段"><a href="#Render-和-Commit-阶段" class="headerlink" title="Render 和 Commit 阶段"></a><code>Render</code> 和 <code>Commit</code> 阶段</h3><p><code>react</code> 团队把整个过程分为两个阶段：</p>
+<ul>
+<li><code>Render</code> 阶段，包括 <code>render</code> 组件和计算需要更新部分的所有工作</li>
+<li><code>Commit</code> 阶段，是将这些更新应用到 <code>DOM</code>  的过程</li>
+</ul>
+<p><code>React</code> 在 <code>commit</code> 阶段更新 <code>DOM</code> 之后，然后同步执行 <code>componentDidMount</code> <code>componentDidUpdate</code> 和 <code>useLayoutEffect</code>。</p>
+<p><code>React</code> 然后设置一个短暂的 <code>timeout</code>，超时后，运行所有的 <code>useEffect</code> hooks，这一步也被称为 <code>Passive Effects</code> （被动 <code>effects</code>）阶段。</p>
+<h2 id="React-如何处理-renders"><a href="#React-如何处理-renders" class="headerlink" title="React 如何处理 renders ?"></a><code>React</code> 如何处理 <code>renders</code> ?</h2><h3 id="排队-renders"><a href="#排队-renders" class="headerlink" title="排队 renders"></a>排队 <code>renders</code></h3><p>初始渲染完成之后，有几种不同的方法告诉 <code>React</code> 去排队重新渲染：</p>
+<ul>
+<li>class 组件<ul>
+<li><code>this.setState()</code></li>
+<li><code>this.forceUpdate()</code></li>
+</ul>
+</li>
+<li>function 组件<ul>
+<li><code>useState</code> setters</li>
+<li><code>useReducer</code> dispatches</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>重新调用 <code>ReactDOM.render(&lt;App&gt;)</code> （等同于调用根组件的 <code>forUpdate()</code>）</li>
+</ul>
+</li>
+</ul>
+<h3 id="标准渲染行为"><a href="#标准渲染行为" class="headerlink" title="标准渲染行为"></a>标准渲染行为</h3><p><strong>当父组件 render 时，React 默认递归 render 父组件里面所有的子组件</strong></p>
+<p>另外，还有一个关键点：</p>
+<p><strong>在普通渲染中，React 并不关心 props 有没有变化，仅仅因为父组件 rendered，子组件将会无条件 render</strong></p>
+<p>例如，假设我们有一个组件树 A &gt; B &gt; C &gt; D，并且已经在页面上显示了它们，用户点击 B 中的一个增加计数器的按钮：</p>
+<ul>
+<li>调用 B 的 <code>setState</code> ，排队 re-render B</li>
+<li>React 从<strong>树的顶部</strong>开始 render</li>
+<li>React 看到 A 没有被标记为需要更新，就跳过 A</li>
+<li>到 B 时，B 被标记为需要更新，React render B，返回 &lt; C &#x2F;&gt;</li>
+<li>到 C 时，C 最初没有被标记，但是因为 B rendered 了，C 也要 render , 并返回 &lt; D &#x2F;&gt;</li>
+<li>到 D 时，D 也没有被标记，但是因为 C rendered 了，D 也要 render</li>
+</ul>
+<h3 id="组件-types"><a href="#组件-types" class="headerlink" title="组件 types"></a>组件 types</h3><p>正如 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#elements-of-different-types">Reconciliation 文档</a> 中所描述的， React 的 render 逻辑首先使用 <code>===</code> 来比较元素的 <code>type</code> ，如果一个元素变成了不同的 <code>type</code>，比如从 <div> 变成 <span>，或者 <ComponentA> 变成 <ComponentB>，那么通过假设该节点及其下面的子节点组成的整个树已经变化，React 将破坏整个部分树，包括所有 DOM 节点，并使用新的组件实例从头开始重新创建，加快比较过程。</p>
+<p>这意味着在 rendering  时，<strong>不要创建新的组件 type</strong>。无论何时创建一个新的组件 type，它都是一个不同的引用，这将导致 React 反复破坏并重新创建子组件树。</p>
+<p>换句话说，不要这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function ParentComponent() &#123;</span><br><span class="line">  // 每次都会创建一个新的 `ChildComponent` 引用</span><br><span class="line">  function ChildComponent() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  return &lt;ChildComponent /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相反，总是分开定义组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  // 只会创建一个组件引用 </span><br><span class="line">function ChildComponent() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">function ParentComponent() &#123;</span><br><span class="line"></span><br><span class="line">  return &lt;ChildComponent /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="render-批处理"><a href="#render-批处理" class="headerlink" title="render 批处理"></a>render 批处理</h3><p>render 批处理指的是对 setState 的多个调用导致一个 render  通道被排队并执行，通常稍有延迟。</p>
+<p>React 文档提到 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous">“状态更新可能是异步的”</a> ，就是指的 render 批处理。React 在<strong>事件处理</strong>中，会自动批量更新状态。因为在一个典型的 React app 中，事件处理程序占代码的很大一部分，这意味着大部分状态更新实际上都是批处理的。</p>
+<p>批处理 render 是通过将 event handlers 包装在 <code>unstable_batchedUpdates</code>  这个内部函数中，在 <code>unstable_batchedUpdates</code> 运行时，React 跟踪所有在这期间排队的状态更新，然后在之后的一次 render 中应用这些更新的状态。</p>
+<p>从概念上来说，你可以把 React 内部所做的事情想象成这样的伪代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 这只是伪代码，内部代码里并不一定这样写，但是大致思想一致</span><br><span class="line">function internalHandleEvent(e) &#123;</span><br><span class="line">  const userProvidedEventHandler = findEventHandler(e);</span><br><span class="line">  </span><br><span class="line">  let batchedUpdates = [];</span><br><span class="line">  </span><br><span class="line">  unstable_batchedUpdates( () =&gt; &#123;</span><br><span class="line">    // 这儿任何一个排队的更新会被 push 进 batchedUpdates</span><br><span class="line">    userProvidedEventHandler(e);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  renderWithQueuedStateUpdates(batchedUpdates);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然而，这意味着在实际的即时调用堆栈之外排队的任何状态更新都不会被批处理。</p>
+<p>让我们来看一个具体的例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const [counter, setCounter] = useState(0);</span><br><span class="line"></span><br><span class="line">const onClick = async () =&gt; &#123;</span><br><span class="line">  setCounter(0);</span><br><span class="line">  setCounter(1);</span><br><span class="line">  </span><br><span class="line">  const data = await fetchSomeData();</span><br><span class="line">  </span><br><span class="line">  setCounter(2);</span><br><span class="line">  setCounter(3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里将执行三次 render。第一次将批量处理 setCounter(0) 、setCounter(1) ，因为它们都发生在原始的事件处理程序调用堆栈中。</p>
+<p>然而，setCounter(2) 、setCounter(3) 的调用是在 await 之后，这意味着原始的同步调用堆栈已经完成，函数的后半部分将在完全独立的事件循环调用堆栈中运行。因为它们都是在原始事件处理程序之外运行，所以并不会 batch render。</p>
+<h2 id="context-上下文和-render-行为"><a href="#context-上下文和-render-行为" class="headerlink" title="context 上下文和 render 行为"></a>context 上下文和 render 行为</h2><p>React Context API 用于将值提供给组件的子树，而不必明确地把值作为 props 向下传递。</p>
+<p><strong>Context 不是状态管理工具</strong>。你必须自己管理传递到上下文中的值。</p>
+<h3 id="更新上下文的值"><a href="#更新上下文的值" class="headerlink" title="更新上下文的值"></a>更新上下文的值</h3><p>**当一个新值被赋给 context provider 时，每一个嵌套的使用该上下文的组件都被迫 re-render **</p>
+<p>从 React 的角度来看，每个context provider 只有一个值——不管它是对象、数组还是基本类型值，它只是一个 context value。目前，<strong>使用上下文的组件无法跳过由新上下文值引起的更新，即使它只关心新值的一部分</strong></p>
+<h3 id="状态更新、上下文和-re-renders"><a href="#状态更新、上下文和-re-renders" class="headerlink" title="状态更新、上下文和 re-renders"></a>状态更新、上下文和 re-renders</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function GrandchildComponent() &#123;</span><br><span class="line">    const value = useContext(MyContext);</span><br><span class="line">    return &lt;div&gt;&#123;value.a&#125;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ChildComponent() &#123;</span><br><span class="line">    return &lt;GrandchildComponent /&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ParentComponent() &#123;</span><br><span class="line">    const [a, setA] = useState(0);</span><br><span class="line">    const [b, setB] = useState(&quot;text&quot;);</span><br><span class="line"></span><br><span class="line">    const contextValue = &#123;a, b&#125;;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">      &lt;MyContext.Provider value=&#123;contextValue&#125;&gt;</span><br><span class="line">        &lt;ChildComponent /&gt;</span><br><span class="line">      &lt;/MyContext.Provider&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每一次 <code>ParentComponent</code> 重新 render，都会产生一个新的 contextValue，从而<strong>递归 render 下面的子组件</strong>。</p>
+<p><code>GrandchildComponent</code> re-render 时会使用新的上下文值，但是<strong>上下文更新并没有导致 <code>GrandchildComponent</code> re-render</strong></p>
+<p>正如 <a target="_blank" rel="noopener" href="https://twitter.com/sophiebits/status/1228942768543686656">Sophie Alpert 说的</a></p>
+<blockquote>
+<p><strong>That React Component Right Under Your Context Provider Should Probably Use <code>React.memo</code></strong></p>
+<p>Context Provider 下的 react 组件可能应该使用 <code>React.memo</code></p>
+</blockquote>
+<h2 id="React-Redux-和-render-行为"><a href="#React-Redux-和-render-行为" class="headerlink" title="React-Redux 和 render 行为"></a>React-Redux 和 render 行为</h2><p>“CONTEXT VS REDUX” 似乎是 React 社区经常问到的问题，<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2018/03/redux-not-dead-yet/">这个问题从一开始就是错误的二分法，因为 Redux 和 Context 是不同的工具，它们可以做不同的事情</a></p>
+<h3 id="React-Redux-订阅"><a href="#React-Redux-订阅" class="headerlink" title="React-Redux 订阅"></a>React-Redux 订阅</h3><p>虽然 React-Redux 在内部使用的是 context，但是是<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2020/01/blogged-answers-react-redux-and-context-behavior/">使用上下文传递 Redux store 实例，而不是当前状态值</a>。这意味着随着时间的推移，我们总是将相同的上下文值传递给 <code>&lt;ReactReduxContext.Provider&gt;</code></p>
+<p>当 action dispatched，Redux store 就会运行所有的订阅通知回调，这个过程完全在 React 之外发生，只有当 React-Redux 知道特定 React 组件所需的数据发生了变化（基于 <code>mapState</code> 或 <code>useSelector</code> 的返回值），React 才会介入，更新特定组件。</p>
+<h3 id="connect-和-useSelector-的区别"><a href="#connect-和-useSelector-的区别" class="headerlink" title="connect 和 useSelector 的区别"></a><code>connect</code> 和 <code>useSelector</code> 的区别</h3><p>被 <code>connect</code> 包裹的组件，只有在传给它的 combined props 发生变化时，才会 re-render。通常，最终的 combined props 是 <code>&#123;...ownProps, ...stateProps, ...dispatchProps&#125;</code> 的组合。</p>
+<p> 另一方面，<code>useSelector</code> 是在函数组件内部调用的一个 hook，无法阻止组件 render。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -412,6 +855,389 @@
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/21/Fiber/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2020/12/21/Fiber/" class="post-title-link" itemprop="url">深入浅出 React Fiber：新一代调度算法与协调机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-21T00:00:00+08:00">2020-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-19 21:58:00" itemprop="dateModified" datetime="2026-04-19T21:58:00+08:00">2026-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>详细剖析 React Fiber 架构，对比 Stack 调度与 Cooperative Scheduling 的差异，解析 Fiber Tree 的构造过程、生命周期钩子的变化以及任务优先级的调度逻辑。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blogs/2020/12/21/Fiber/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/17/ES2020%20%E6%96%B0%E7%89%B9%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2020/12/17/ES2020%20%E6%96%B0%E7%89%B9%E6%80%A7/" class="post-title-link" itemprop="url">ES2020 (ES11) 新特性深度解析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-17T00:00:00+08:00">2020-12-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-19 21:50:00" itemprop="dateModified" datetime="2026-04-19T21:50:00+08:00">2026-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文详细整理了 ES2020 (ES11) 的核心新特性，包括动态 import()、BigInt、Promise.allSettled、可选链操作符（?.）以及空值合并操作符（??）等实战用法。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blogs/2020/12/17/ES2020%20%E6%96%B0%E7%89%B9%E6%80%A7/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/17/WebSpeechAPI-SpeechSynthesis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2020/12/17/WebSpeechAPI-SpeechSynthesis/" class="post-title-link" itemprop="url">使用 Web Speech API 实现网页语音合成（SpeechSynthesis）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-17T00:00:00+08:00">2020-12-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-19 14:15:00" itemprop="dateModified" datetime="2026-04-19T14:15:00+08:00">2026-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">前端开发</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文介绍了如何利用浏览器原生的 SpeechSynthesis API 实现文字转语音功能，并提供了一段适配当前页面语言的自动朗读代码示例。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blogs/2020/12/17/WebSpeechAPI-SpeechSynthesis/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/17/%E5%8F%96%E6%B6%88%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2020/12/17/%E5%8F%96%E6%B6%88%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/" class="post-title-link" itemprop="url">如何在 JavaScript 中取消异步请求与任务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-17T00:00:00+08:00">2020-12-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-19 20:01:53" itemprop="dateModified" datetime="2026-04-19T20:01:53+08:00">2026-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">前端开发</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文详细介绍了如何使用 AbortController 取消 fetch 请求，并提供了模拟取消 Promise 异步操作的实战代码示例。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blogs/2020/12/17/%E5%8F%96%E6%B6%88%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/blogs/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blogs/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
 
 </div>
   </main>

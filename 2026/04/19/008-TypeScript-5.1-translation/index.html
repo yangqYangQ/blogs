@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blogs/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blogs/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blogs/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blogs/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yangqyangq.github.io","root":"/blogs/","images":"/blogs/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blogs/js/config.js" defer></script>
+
+    <meta name="description" content="undefined 返回函数的更简单隐式返回在早期版本的 TypeScript 中，只有 void- 和 any- 返回函数可以不写 return 语句，这意味着即使一个函数返回 **undefined**，也必须显式写明 return undefined。 TypeScript 5.1 允许返回 undefined 的函数没有 return 语句。 123456789&#x2F;&#x2F;  Works in T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://yangqyangq.github.io/blogs/2026/04/19/008-TypeScript-5.1-translation/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="undefined 返回函数的更简单隐式返回在早期版本的 TypeScript 中，只有 void- 和 any- 返回函数可以不写 return 语句，这意味着即使一个函数返回 **undefined**，也必须显式写明 return undefined。 TypeScript 5.1 允许返回 undefined 的函数没有 return 语句。 123456789&#x2F;&#x2F;  Works in T">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-19T13:56:18.133Z">
+<meta property="article:modified_time" content="2026-04-19T13:56:18.367Z">
+<meta property="article:author" content="yangq">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yangqyangq.github.io/blogs/2026/04/19/008-TypeScript-5.1-translation/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yangqyangq.github.io/blogs/2026/04/19/008-TypeScript-5.1-translation/","path":"2026/04/19/008-TypeScript-5.1-translation/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/blogs/js/utils.js" defer></script><script src="/blogs/js/motion.js" defer></script><script src="/blogs/js/sidebar.js" defer></script><script src="/blogs/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blogs/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blogs/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blogs/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/blogs/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/blogs/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined-%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0%E7%9A%84%E6%9B%B4%E7%AE%80%E5%8D%95%E9%9A%90%E5%BC%8F%E8%BF%94%E5%9B%9E"><span class="nav-text">undefined 返回函数的更简单隐式返回</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Getters-%E3%80%81Setters-%E4%B8%8D%E7%9B%B8%E5%85%B3%E7%B1%BB%E5%9E%8B"><span class="nav-text">Getters 、Setters 不相关类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSX-Elements-%E5%92%8C-JSX-Tag-%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E8%A7%A3%E8%80%A6%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="nav-text">JSX Elements 和 JSX Tag 类型之间的解耦类型检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E7%9A%84-JSX-Attributes"><span class="nav-text">带名称空间的 JSX Attributes</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangq</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blogs/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blogs/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blogs/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:yangq0979@gmail.com" title="E-Mail → mailto:yangq0979@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/008-TypeScript-5.1-translation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-19 21:56:18" itemprop="dateCreated datePublished" datetime="2026-04-19T21:56:18+08:00">2026-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="undefined-返回函数的更简单隐式返回"><a href="#undefined-返回函数的更简单隐式返回" class="headerlink" title="undefined 返回函数的更简单隐式返回"></a>undefined 返回函数的更简单隐式返回</h4><p>在早期版本的 TypeScript 中，只有 <strong><code>void-</code></strong> 和 <strong><code>any-</code></strong> 返回函数可以不写 <code>return</code> 语句，这意味着即使一个函数返回 **<code>undefined</code>**，也必须显式写明 <code>return undefined</code>。</p>
+<p>TypeScript 5.1 允许返回 <code>undefined</code> 的函数没有 <code>return</code> 语句。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f4</span>(<span class="params"></span>): <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="title function_">takesFunction</span>((): <span class="function"><span class="params">undefined</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Getters-、Setters-不相关类型"><a href="#Getters-、Setters-不相关类型" class="headerlink" title="Getters 、Setters 不相关类型"></a>Getters 、Setters 不相关类型</h4><p> TypeScript 4.3 允许 <code>getter</code>、 <code>setter</code> 访问器可以指定两种不同的类型，但是 <code>getter</code> 类型必须是 <code>setter</code> 类型的子类型。 </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Serializer</span> &#123;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params"><span class="attr">v</span>: <span class="built_in">string</span> | <span class="built_in">number</span> | <span class="built_in">boolean</span></span>);</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">let</span> <span class="attr">box</span>: <span class="title class_">Serializer</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Allows writing a &#x27;boolean&#x27;</span></span><br><span class="line">box.<span class="property">value</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Comes out as a &#x27;string&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(box.<span class="property">value</span>.<span class="title function_">toUpperCase</span>());</span><br></pre></td></tr></table></figure>
+
+
+
+<p>TypeScript 5.1 现在允许 <code>getter</code> 、<code>setter</code> 可以有完全不相关的类型，前提是它们有显式的类型注释。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CSSStyleRule</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Always reads as a `CSSStyleDeclaration` */</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">style</span>(): <span class="title class_">CSSStyleDeclaration</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Can only write a `string` here. */</span></span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">style</span>(<span class="params"><span class="attr">newValue</span>: <span class="built_in">string</span></span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查"><a href="#JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查" class="headerlink" title="JSX Elements 和 JSX Tag 类型之间的解耦类型检查"></a><code>JSX Elements</code> 和 <code>JSX Tag</code> 类型之间的解耦类型检查</h4><p>对于 <code>JSX</code> 组件而言，会检查是否属于 <code>JSX.Element</code> 类型。</p>
+<p>但是 <code>React</code> 未来版本可能会支持返回 <code>promise</code> 的组件，如果不放宽 <code>JSX.Element</code> 类型，现有版本的 <code>TypeScript</code> 就无法表达这一点。</p>
+<p><code>TypeScript 5.1</code> 开始使用 <strong><code>JSX.ElementType</code></strong> 类型，可以精确指定什么可以作为 <code>JSX</code> tag。</p>
+<h4 id="带名称空间的-JSX-Attributes"><a href="#带名称空间的-JSX-Attributes" class="headerlink" title="带名称空间的 JSX Attributes"></a>带名称空间的 <code>JSX Attributes</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Both of these are equivalent:</span></span><br><span class="line"><span class="keyword">const</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a:b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a</span> <span class="attr">:</span> <span class="attr">b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">FooProps</span> &#123;</span><br><span class="line">    <span class="string">&quot;a:b&quot;</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Foo</span>(<span class="params"><span class="attr">props</span>: <span class="title class_">FooProps</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props[&quot;a:b&quot;]&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>带名称空间的 <code>tag</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In some library&#x27;s code or in an augmentation of that library:</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">JSX</span> &#123;</span><br><span class="line">    <span class="keyword">interface</span> <span class="title class_">IntrinsicElements</span> &#123;</span><br><span class="line">        [<span class="string">&quot;a:b&quot;</span>]: &#123; <span class="attr">prop</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In our code:</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">a:b</span> <span class="attr">prop</span>=<span class="string">&quot;hello!&quot;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>原文链接：<a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/">https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blogs/2026/04/19/007-Memorize-Game-With-Swift/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blogs/2026/04/19/009-Vue3/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangq</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

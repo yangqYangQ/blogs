@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blogs/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blogs/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blogs/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blogs/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yangqyangq.github.io","root":"/blogs/","images":"/blogs/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blogs/js/config.js" defer></script>
+
+    <meta name="description" content="上一级 React Rendering 行为翻译自Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior [toc] 什么是 RenderingRendering 是基于当前 props 和 state 组合，要求组件描述它们想要的 UI 样子的过程。 Rendering 过程概述React 将从组件树的根开始，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="上一级 React Rendering 行为翻译自Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior [toc] 什么是 RenderingRendering 是基于当前 props 和 state 组合，要求组件描述它们想要的 UI 样子的过程。 Rendering 过程概述React 将从组件树的根开始，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yangqyangq.github.io/assets/006/convert-jsx.png">
+<meta property="article:published_time" content="2026-04-19T13:55:59.310Z">
+<meta property="article:modified_time" content="2026-04-19T13:55:59.466Z">
+<meta property="article:author" content="yangq">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yangqyangq.github.io/assets/006/convert-jsx.png">
+
+
+<link rel="canonical" href="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/","path":"2026/04/19/006-React-Rendering-Behavior/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/blogs/js/utils.js" defer></script><script src="/blogs/js/motion.js" defer></script><script src="/blogs/js/sidebar.js" defer></script><script src="/blogs/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blogs/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blogs/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blogs/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/blogs/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/blogs/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React-Rendering-%E8%A1%8C%E4%B8%BA"><span class="nav-text">React Rendering 行为</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Rendering"><span class="nav-text">什么是 Rendering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rendering-%E8%BF%87%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">Rendering 过程概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Render-%E5%92%8C-Commit-%E9%98%B6%E6%AE%B5"><span class="nav-text">Render 和 Commit 阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-renders"><span class="nav-text">React 如何处理 renders ?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E9%98%9F-renders"><span class="nav-text">排队 renders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%B8%B2%E6%9F%93%E8%A1%8C%E4%B8%BA"><span class="nav-text">标准渲染行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6-types"><span class="nav-text">组件 types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#render-%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-text">render 批处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#context-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C-render-%E8%A1%8C%E4%B8%BA"><span class="nav-text">context 上下文和 render 行为</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E4%B8%8A%E4%B8%8B%E6%96%87%E7%9A%84%E5%80%BC"><span class="nav-text">更新上下文的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9B%B4%E6%96%B0%E3%80%81%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C-re-renders"><span class="nav-text">状态更新、上下文和 re-renders</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Redux-%E5%92%8C-render-%E8%A1%8C%E4%B8%BA"><span class="nav-text">React-Redux 和 render 行为</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Redux-%E8%AE%A2%E9%98%85"><span class="nav-text">React-Redux 订阅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#connect-%E5%92%8C-useSelector-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">connect 和 useSelector 的区别</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangq</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blogs/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blogs/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blogs/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:yangq0979@gmail.com" title="E-Mail → mailto:yangq0979@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-19 21:55:59" itemprop="dateCreated datePublished" datetime="2026-04-19T21:55:59+08:00">2026-04-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="../README.md">上一级</a></p>
+<h1 id="React-Rendering-行为"><a href="#React-Rendering-行为" class="headerlink" title="React Rendering 行为"></a>React Rendering 行为</h1><p>翻译自<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/">Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior</a></p>
+<p>[toc]</p>
+<h2 id="什么是-Rendering"><a href="#什么是-Rendering" class="headerlink" title="什么是 Rendering"></a>什么是 <code>Rendering</code></h2><p><strong><code>Rendering</code></strong> 是基于当前 <code>props</code> 和 <code>state</code> 组合，要求组件描述它们想要的 <code>UI</code> 样子的过程。</p>
+<h3 id="Rendering-过程概述"><a href="#Rendering-过程概述" class="headerlink" title="Rendering 过程概述"></a><code>Rendering</code> 过程概述</h3><p><code>React</code> 将从组件树的根开始，向下循环查找所有被标记成 <code>needing updates</code> 的组件。对于每个被标记的组件，<code>React</code> 会调用<code>classComponentInstance.render()</code> （对于 <code>class</code> 组件） 或者 <code>FunctionComponent()</code> （对于 <code>function</code> 组件），并保存输出结果。</p>
+<p>组件的 <code>render</code> 输出通常使用 <code>JSX</code> 语法编写，编译时会被转换成 <code>React.createElement()</code>。<code>createElement</code> 返回 <code>js</code> 对象，用于描述 <code>UI</code> 的预期结构。</p>
+<p>例子：</p>
+<p><img src="/blogs/../assets/006/convert-jsx.png" alt="jsx convert"></p>
+<p>在收集了整个组件树的 <code>render</code> 输出后，<code>React</code> 会比较 <code>current</code> 指向的组件树和 <code>work-in-progress</code> 指向的组件树，将所有的更新放到一个列表中。这种比较计算的过程叫做 <code>reconciliation</code> 。</p>
+<p>最后更新 <code>DOM</code>。</p>
+<h3 id="Render-和-Commit-阶段"><a href="#Render-和-Commit-阶段" class="headerlink" title="Render 和 Commit 阶段"></a><code>Render</code> 和 <code>Commit</code> 阶段</h3><p><code>react</code> 团队把整个过程分为两个阶段：</p>
+<ul>
+<li><code>Render</code> 阶段，包括 <code>render</code> 组件和计算需要更新部分的所有工作</li>
+<li><code>Commit</code> 阶段，是将这些更新应用到 <code>DOM</code>  的过程</li>
+</ul>
+<p><code>React</code> 在 <code>commit</code> 阶段更新 <code>DOM</code> 之后，然后同步执行 <code>componentDidMount</code> <code>componentDidUpdate</code> 和 <code>useLayoutEffect</code>。</p>
+<p><code>React</code> 然后设置一个短暂的 <code>timeout</code>，超时后，运行所有的 <code>useEffect</code> hooks，这一步也被称为 <code>Passive Effects</code> （被动 <code>effects</code>）阶段。</p>
+<h2 id="React-如何处理-renders"><a href="#React-如何处理-renders" class="headerlink" title="React 如何处理 renders ?"></a><code>React</code> 如何处理 <code>renders</code> ?</h2><h3 id="排队-renders"><a href="#排队-renders" class="headerlink" title="排队 renders"></a>排队 <code>renders</code></h3><p>初始渲染完成之后，有几种不同的方法告诉 <code>React</code> 去排队重新渲染：</p>
+<ul>
+<li>class 组件<ul>
+<li><code>this.setState()</code></li>
+<li><code>this.forceUpdate()</code></li>
+</ul>
+</li>
+<li>function 组件<ul>
+<li><code>useState</code> setters</li>
+<li><code>useReducer</code> dispatches</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>重新调用 <code>ReactDOM.render(&lt;App&gt;)</code> （等同于调用根组件的 <code>forUpdate()</code>）</li>
+</ul>
+</li>
+</ul>
+<h3 id="标准渲染行为"><a href="#标准渲染行为" class="headerlink" title="标准渲染行为"></a>标准渲染行为</h3><p><strong>当父组件 render 时，React 默认递归 render 父组件里面所有的子组件</strong></p>
+<p>另外，还有一个关键点：</p>
+<p><strong>在普通渲染中，React 并不关心 props 有没有变化，仅仅因为父组件 rendered，子组件将会无条件 render</strong></p>
+<p>例如，假设我们有一个组件树 A &gt; B &gt; C &gt; D，并且已经在页面上显示了它们，用户点击 B 中的一个增加计数器的按钮：</p>
+<ul>
+<li>调用 B 的 <code>setState</code> ，排队 re-render B</li>
+<li>React 从<strong>树的顶部</strong>开始 render</li>
+<li>React 看到 A 没有被标记为需要更新，就跳过 A</li>
+<li>到 B 时，B 被标记为需要更新，React render B，返回 &lt; C &#x2F;&gt;</li>
+<li>到 C 时，C 最初没有被标记，但是因为 B rendered 了，C 也要 render , 并返回 &lt; D &#x2F;&gt;</li>
+<li>到 D 时，D 也没有被标记，但是因为 C rendered 了，D 也要 render</li>
+</ul>
+<h3 id="组件-types"><a href="#组件-types" class="headerlink" title="组件 types"></a>组件 types</h3><p>正如 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#elements-of-different-types">Reconciliation 文档</a> 中所描述的， React 的 render 逻辑首先使用 <code>===</code> 来比较元素的 <code>type</code> ，如果一个元素变成了不同的 <code>type</code>，比如从 <div> 变成 <span>，或者 <ComponentA> 变成 <ComponentB>，那么通过假设该节点及其下面的子节点组成的整个树已经变化，React 将破坏整个部分树，包括所有 DOM 节点，并使用新的组件实例从头开始重新创建，加快比较过程。</p>
+<p>这意味着在 rendering  时，<strong>不要创建新的组件 type</strong>。无论何时创建一个新的组件 type，它都是一个不同的引用，这将导致 React 反复破坏并重新创建子组件树。</p>
+<p>换句话说，不要这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function ParentComponent() &#123;</span><br><span class="line">  // 每次都会创建一个新的 `ChildComponent` 引用</span><br><span class="line">  function ChildComponent() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  return &lt;ChildComponent /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相反，总是分开定义组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  // 只会创建一个组件引用 </span><br><span class="line">function ChildComponent() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">function ParentComponent() &#123;</span><br><span class="line"></span><br><span class="line">  return &lt;ChildComponent /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="render-批处理"><a href="#render-批处理" class="headerlink" title="render 批处理"></a>render 批处理</h3><p>render 批处理指的是对 setState 的多个调用导致一个 render  通道被排队并执行，通常稍有延迟。</p>
+<p>React 文档提到 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous">“状态更新可能是异步的”</a> ，就是指的 render 批处理。React 在<strong>事件处理</strong>中，会自动批量更新状态。因为在一个典型的 React app 中，事件处理程序占代码的很大一部分，这意味着大部分状态更新实际上都是批处理的。</p>
+<p>批处理 render 是通过将 event handlers 包装在 <code>unstable_batchedUpdates</code>  这个内部函数中，在 <code>unstable_batchedUpdates</code> 运行时，React 跟踪所有在这期间排队的状态更新，然后在之后的一次 render 中应用这些更新的状态。</p>
+<p>从概念上来说，你可以把 React 内部所做的事情想象成这样的伪代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 这只是伪代码，内部代码里并不一定这样写，但是大致思想一致</span><br><span class="line">function internalHandleEvent(e) &#123;</span><br><span class="line">  const userProvidedEventHandler = findEventHandler(e);</span><br><span class="line">  </span><br><span class="line">  let batchedUpdates = [];</span><br><span class="line">  </span><br><span class="line">  unstable_batchedUpdates( () =&gt; &#123;</span><br><span class="line">    // 这儿任何一个排队的更新会被 push 进 batchedUpdates</span><br><span class="line">    userProvidedEventHandler(e);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  renderWithQueuedStateUpdates(batchedUpdates);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然而，这意味着在实际的即时调用堆栈之外排队的任何状态更新都不会被批处理。</p>
+<p>让我们来看一个具体的例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const [counter, setCounter] = useState(0);</span><br><span class="line"></span><br><span class="line">const onClick = async () =&gt; &#123;</span><br><span class="line">  setCounter(0);</span><br><span class="line">  setCounter(1);</span><br><span class="line">  </span><br><span class="line">  const data = await fetchSomeData();</span><br><span class="line">  </span><br><span class="line">  setCounter(2);</span><br><span class="line">  setCounter(3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里将执行三次 render。第一次将批量处理 setCounter(0) 、setCounter(1) ，因为它们都发生在原始的事件处理程序调用堆栈中。</p>
+<p>然而，setCounter(2) 、setCounter(3) 的调用是在 await 之后，这意味着原始的同步调用堆栈已经完成，函数的后半部分将在完全独立的事件循环调用堆栈中运行。因为它们都是在原始事件处理程序之外运行，所以并不会 batch render。</p>
+<h2 id="context-上下文和-render-行为"><a href="#context-上下文和-render-行为" class="headerlink" title="context 上下文和 render 行为"></a>context 上下文和 render 行为</h2><p>React Context API 用于将值提供给组件的子树，而不必明确地把值作为 props 向下传递。</p>
+<p><strong>Context 不是状态管理工具</strong>。你必须自己管理传递到上下文中的值。</p>
+<h3 id="更新上下文的值"><a href="#更新上下文的值" class="headerlink" title="更新上下文的值"></a>更新上下文的值</h3><p>**当一个新值被赋给 context provider 时，每一个嵌套的使用该上下文的组件都被迫 re-render **</p>
+<p>从 React 的角度来看，每个context provider 只有一个值——不管它是对象、数组还是基本类型值，它只是一个 context value。目前，<strong>使用上下文的组件无法跳过由新上下文值引起的更新，即使它只关心新值的一部分</strong></p>
+<h3 id="状态更新、上下文和-re-renders"><a href="#状态更新、上下文和-re-renders" class="headerlink" title="状态更新、上下文和 re-renders"></a>状态更新、上下文和 re-renders</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function GrandchildComponent() &#123;</span><br><span class="line">    const value = useContext(MyContext);</span><br><span class="line">    return &lt;div&gt;&#123;value.a&#125;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ChildComponent() &#123;</span><br><span class="line">    return &lt;GrandchildComponent /&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ParentComponent() &#123;</span><br><span class="line">    const [a, setA] = useState(0);</span><br><span class="line">    const [b, setB] = useState(&quot;text&quot;);</span><br><span class="line"></span><br><span class="line">    const contextValue = &#123;a, b&#125;;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">      &lt;MyContext.Provider value=&#123;contextValue&#125;&gt;</span><br><span class="line">        &lt;ChildComponent /&gt;</span><br><span class="line">      &lt;/MyContext.Provider&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每一次 <code>ParentComponent</code> 重新 render，都会产生一个新的 contextValue，从而<strong>递归 render 下面的子组件</strong>。</p>
+<p><code>GrandchildComponent</code> re-render 时会使用新的上下文值，但是<strong>上下文更新并没有导致 <code>GrandchildComponent</code> re-render</strong></p>
+<p>正如 <a target="_blank" rel="noopener" href="https://twitter.com/sophiebits/status/1228942768543686656">Sophie Alpert 说的</a></p>
+<blockquote>
+<p><strong>That React Component Right Under Your Context Provider Should Probably Use <code>React.memo</code></strong></p>
+<p>Context Provider 下的 react 组件可能应该使用 <code>React.memo</code></p>
+</blockquote>
+<h2 id="React-Redux-和-render-行为"><a href="#React-Redux-和-render-行为" class="headerlink" title="React-Redux 和 render 行为"></a>React-Redux 和 render 行为</h2><p>“CONTEXT VS REDUX” 似乎是 React 社区经常问到的问题，<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2018/03/redux-not-dead-yet/">这个问题从一开始就是错误的二分法，因为 Redux 和 Context 是不同的工具，它们可以做不同的事情</a></p>
+<h3 id="React-Redux-订阅"><a href="#React-Redux-订阅" class="headerlink" title="React-Redux 订阅"></a>React-Redux 订阅</h3><p>虽然 React-Redux 在内部使用的是 context，但是是<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2020/01/blogged-answers-react-redux-and-context-behavior/">使用上下文传递 Redux store 实例，而不是当前状态值</a>。这意味着随着时间的推移，我们总是将相同的上下文值传递给 <code>&lt;ReactReduxContext.Provider&gt;</code></p>
+<p>当 action dispatched，Redux store 就会运行所有的订阅通知回调，这个过程完全在 React 之外发生，只有当 React-Redux 知道特定 React 组件所需的数据发生了变化（基于 <code>mapState</code> 或 <code>useSelector</code> 的返回值），React 才会介入，更新特定组件。</p>
+<h3 id="connect-和-useSelector-的区别"><a href="#connect-和-useSelector-的区别" class="headerlink" title="connect 和 useSelector 的区别"></a><code>connect</code> 和 <code>useSelector</code> 的区别</h3><p>被 <code>connect</code> 包裹的组件，只有在传给它的 combined props 发生变化时，才会 re-render。通常，最终的 combined props 是 <code>&#123;...ownProps, ...stateProps, ...dispatchProps&#125;</code> 的组合。</p>
+<p> 另一方面，<code>useSelector</code> 是在函数组件内部调用的一个 hook，无法阻止组件 render。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blogs/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/" rel="prev" title="实战复盘：AI 分析报告的动态排版与自适应分页方案">
+                  <i class="fa fa-angle-left"></i> 实战复盘：AI 分析报告的动态排版与自适应分页方案
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blogs/2026/04/19/007-Memorize-Game-With-Swift/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangq</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
