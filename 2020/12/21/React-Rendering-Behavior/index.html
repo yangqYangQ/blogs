@@ -20,28 +20,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yangqyangq.github.io","root":"/blogs/","images":"/blogs/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blogs/js/config.js" defer></script>
 
-    <meta name="description" content="上一级 React Rendering 行为翻译自Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior [toc] 什么是 RenderingRendering 是基于当前 props 和 state 组合，要求组件描述它们想要的 UI 样子的过程。 Rendering 过程概述React 将从组件树的根开始，">
+    <meta name="description" content="React Rendering 行为翻译自Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior 什么是 RenderingRendering 是基于当前 props 和 state 组合，要求组件描述它们想要的 UI 样子的过程。 Rendering 过程概述React 将从组件树的根开始，向下循环查找所有被标">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/index.html">
+<meta property="og:title" content="React Rendering 行为">
+<meta property="og:url" content="https://yangqyangq.github.io/blogs/2020/12/21/React-Rendering-Behavior/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="上一级 React Rendering 行为翻译自Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior [toc] 什么是 RenderingRendering 是基于当前 props 和 state 组合，要求组件描述它们想要的 UI 样子的过程。 Rendering 过程概述React 将从组件树的根开始，">
+<meta property="og:description" content="React Rendering 行为翻译自Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior 什么是 RenderingRendering 是基于当前 props 和 state 组合，要求组件描述它们想要的 UI 样子的过程。 Rendering 过程概述React 将从组件树的根开始，向下循环查找所有被标">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yangqyangq.github.io/assets/006/convert-jsx.png">
-<meta property="article:published_time" content="2026-04-19T13:55:59.310Z">
-<meta property="article:modified_time" content="2026-04-19T13:55:59.466Z">
+<meta property="og:image" content="https://yangqyangq.github.io/blogs/2020/12/21/React-Rendering-Behavior/convert-jsx.png">
+<meta property="article:published_time" content="2020-12-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-03T12:58:00.000Z">
 <meta property="article:author" content="yangq">
+<meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yangqyangq.github.io/assets/006/convert-jsx.png">
+<meta name="twitter:image" content="https://yangqyangq.github.io/blogs/2020/12/21/React-Rendering-Behavior/convert-jsx.png">
 
 
-<link rel="canonical" href="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/">
+<link rel="canonical" href="https://yangqyangq.github.io/blogs/2020/12/21/React-Rendering-Behavior/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/","path":"2026/04/19/006-React-Rendering-Behavior/","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yangqyangq.github.io/blogs/2020/12/21/React-Rendering-Behavior/","path":"2020/12/21/React-Rendering-Behavior/","title":"React Rendering 行为"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title> | Hexo</title>
+<title>React Rendering 行为 | Hexo</title>
   
 
 
@@ -186,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/006-React-Rendering-Behavior/">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/21/React-Rendering-Behavior/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blogs/images/avatar.gif">
@@ -199,12 +200,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="name" content="React Rendering 行为 | Hexo">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          React Rendering 行为
         </h1>
 
         <div class="post-meta-container">
@@ -215,7 +216,27 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-04-19 21:55:59" itemprop="dateCreated datePublished" datetime="2026-04-19T21:55:59+08:00">2026-04-19</time>
+      <time title="创建时间：2020-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-21T00:00:00+08:00">2020-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-05-03 20:58:00" itemprop="dateModified" datetime="2026-05-03T20:58:00+08:00">2026-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+        </span>
     </span>
 
   
@@ -227,14 +248,13 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="../README.md">上一级</a></p>
-<h1 id="React-Rendering-行为"><a href="#React-Rendering-行为" class="headerlink" title="React Rendering 行为"></a>React Rendering 行为</h1><p>翻译自<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/">Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior</a></p>
-<p>[toc]</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="React-Rendering-行为"><a href="#React-Rendering-行为" class="headerlink" title="React Rendering 行为"></a>React Rendering 行为</h1><p>翻译自<a target="_blank" rel="noopener" href="https://blog.isquaredsoftware.com/2020/05/blogged-answers-a-mostly-complete-guide-to-react-rendering-behavior/">Blogged Answers: A (Mostly) Complete Guide to React Rendering Behavior</a></p>
 <h2 id="什么是-Rendering"><a href="#什么是-Rendering" class="headerlink" title="什么是 Rendering"></a>什么是 <code>Rendering</code></h2><p><strong><code>Rendering</code></strong> 是基于当前 <code>props</code> 和 <code>state</code> 组合，要求组件描述它们想要的 <code>UI</code> 样子的过程。</p>
 <h3 id="Rendering-过程概述"><a href="#Rendering-过程概述" class="headerlink" title="Rendering 过程概述"></a><code>Rendering</code> 过程概述</h3><p><code>React</code> 将从组件树的根开始，向下循环查找所有被标记成 <code>needing updates</code> 的组件。对于每个被标记的组件，<code>React</code> 会调用<code>classComponentInstance.render()</code> （对于 <code>class</code> 组件） 或者 <code>FunctionComponent()</code> （对于 <code>function</code> 组件），并保存输出结果。</p>
 <p>组件的 <code>render</code> 输出通常使用 <code>JSX</code> 语法编写，编译时会被转换成 <code>React.createElement()</code>。<code>createElement</code> 返回 <code>js</code> 对象，用于描述 <code>UI</code> 的预期结构。</p>
 <p>例子：</p>
-<p><img src="/blogs/../assets/006/convert-jsx.png" alt="jsx convert"></p>
+<img src="/blogs/2020/12/21/React-Rendering-Behavior/convert-jsx.png" class="" title="jsx convert">
+
 <p>在收集了整个组件树的 <code>render</code> 输出后，<code>React</code> 会比较 <code>current</code> 指向的组件树和 <code>work-in-progress</code> 指向的组件树，将所有的更新放到一个列表中。这种比较计算的过程叫做 <code>reconciliation</code> 。</p>
 <p>最后更新 <code>DOM</code>。</p>
 <h3 id="Render-和-Commit-阶段"><a href="#Render-和-Commit-阶段" class="headerlink" title="Render 和 Commit 阶段"></a><code>Render</code> 和 <code>Commit</code> 阶段</h3><p><code>react</code> 团队把整个过程分为两个阶段：</p>
@@ -273,15 +293,13 @@
 <li>到 C 时，C 最初没有被标记，但是因为 B rendered 了，C 也要 render , 并返回 &lt; D &#x2F;&gt;</li>
 <li>到 D 时，D 也没有被标记，但是因为 C rendered 了，D 也要 render</li>
 </ul>
-<h3 id="组件-types"><a href="#组件-types" class="headerlink" title="组件 types"></a>组件 types</h3><p>正如 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#elements-of-different-types">Reconciliation 文档</a> 中所描述的， React 的 render 逻辑首先使用 <code>===</code> 来比较元素的 <code>type</code> ，如果一个元素变成了不同的 <code>type</code>，比如从 <div> 变成 <span>，或者 <ComponentA> 变成 <ComponentB>，那么通过假设该节点及其下面的子节点组成的整个树已经变化，React 将破坏整个部分树，包括所有 DOM 节点，并使用新的组件实例从头开始重新创建，加快比较过程。</p>
+<h3 id="组件-types"><a href="#组件-types" class="headerlink" title="组件 types"></a>组件 types</h3><p>正如 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#elements-of-different-types">Reconciliation 文档</a> 中所描述的， React 的 render 逻辑首先使用 <code>===</code> 来比较元素的 <code>type</code> ，如果一个元素变成了不同的 <code>type</code>，比如从<code> &lt;div&gt;</code> 变成 <code>&lt;span&gt;</code>，或者 <code>&lt;ComponentA&gt;</code> 变成 <code>&lt;ComponentB&gt;</code>，那么通过假设该节点及其下面的子节点组成的整个树已经变化，React 将破坏整个部分树，包括所有 DOM 节点，并使用新的组件实例从头开始重新创建，加快比较过程。</p>
 <p>这意味着在 rendering  时，<strong>不要创建新的组件 type</strong>。无论何时创建一个新的组件 type，它都是一个不同的引用，这将导致 React 反复破坏并重新创建子组件树。</p>
 <p>换句话说，不要这样写：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function ParentComponent() &#123;</span><br><span class="line">  // 每次都会创建一个新的 `ChildComponent` 引用</span><br><span class="line">  function ChildComponent() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  return &lt;ChildComponent /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>相反，总是分开定义组件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  // 只会创建一个组件引用 </span><br><span class="line">function ChildComponent() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">function ParentComponent() &#123;</span><br><span class="line"></span><br><span class="line">  return &lt;ChildComponent /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
 
 <h3 id="render-批处理"><a href="#render-批处理" class="headerlink" title="render 批处理"></a>render 批处理</h3><p>render 批处理指的是对 setState 的多个调用导致一个 render  通道被排队并执行，通常稍有延迟。</p>
 <p>React 文档提到 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous">“状态更新可能是异步的”</a> ，就是指的 render 批处理。React 在<strong>事件处理</strong>中，会自动批量更新状态。因为在一个典型的 React app 中，事件处理程序占代码的很大一部分，这意味着大部分状态更新实际上都是批处理的。</p>
@@ -297,7 +315,7 @@
 <p>然而，setCounter(2) 、setCounter(3) 的调用是在 await 之后，这意味着原始的同步调用堆栈已经完成，函数的后半部分将在完全独立的事件循环调用堆栈中运行。因为它们都是在原始事件处理程序之外运行，所以并不会 batch render。</p>
 <h2 id="context-上下文和-render-行为"><a href="#context-上下文和-render-行为" class="headerlink" title="context 上下文和 render 行为"></a>context 上下文和 render 行为</h2><p>React Context API 用于将值提供给组件的子树，而不必明确地把值作为 props 向下传递。</p>
 <p><strong>Context 不是状态管理工具</strong>。你必须自己管理传递到上下文中的值。</p>
-<h3 id="更新上下文的值"><a href="#更新上下文的值" class="headerlink" title="更新上下文的值"></a>更新上下文的值</h3><p>**当一个新值被赋给 context provider 时，每一个嵌套的使用该上下文的组件都被迫 re-render **</p>
+<h3 id="更新上下文的值"><a href="#更新上下文的值" class="headerlink" title="更新上下文的值"></a>更新上下文的值</h3><p><b>当一个新值被赋给 context provider 时，每一个嵌套的使用该上下文的组件都被迫 re-render</b></p>
 <p>从 React 的角度来看，每个context provider 只有一个值——不管它是对象、数组还是基本类型值，它只是一个 context value。目前，<strong>使用上下文的组件无法跳过由新上下文值引起的更新，即使它只关心新值的一部分</strong></p>
 <h3 id="状态更新、上下文和-re-renders"><a href="#状态更新、上下文和-re-renders" class="headerlink" title="状态更新、上下文和 re-renders"></a>状态更新、上下文和 re-renders</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function GrandchildComponent() &#123;</span><br><span class="line">    const value = useContext(MyContext);</span><br><span class="line">    return &lt;div&gt;&#123;value.a&#125;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ChildComponent() &#123;</span><br><span class="line">    return &lt;GrandchildComponent /&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ParentComponent() &#123;</span><br><span class="line">    const [a, setA] = useState(0);</span><br><span class="line">    const [b, setB] = useState(&quot;text&quot;);</span><br><span class="line"></span><br><span class="line">    const contextValue = &#123;a, b&#125;;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">      &lt;MyContext.Provider value=&#123;contextValue&#125;&gt;</span><br><span class="line">        &lt;ChildComponent /&gt;</span><br><span class="line">      &lt;/MyContext.Provider&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -321,18 +339,21 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blogs/tags/React/" rel="tag"># React</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/blogs/2026/04/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/" rel="prev" title="实战复盘：AI 分析报告的动态排版与自适应分页方案">
-                  <i class="fa fa-angle-left"></i> 实战复盘：AI 分析报告的动态排版与自适应分页方案
+                <a href="/blogs/2020/12/17/ES2020%20%E6%96%B0%E7%89%B9%E6%80%A7/" rel="prev" title="ES2020 (ES11) 新特性深度解析">
+                  <i class="fa fa-angle-left"></i> ES2020 (ES11) 新特性深度解析
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/blogs/2026/04/19/007-Memorize-Game-With-Swift/" rel="next" title="">
-                   <i class="fa fa-angle-right"></i>
+                <a href="/blogs/2020/12/21/Fiber/" rel="next" title="深入浅出 React Fiber：新一代调度算法与协调机制">
+                  深入浅出 React Fiber：新一代调度算法与协调机制 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
