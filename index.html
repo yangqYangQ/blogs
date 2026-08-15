@@ -142,12 +142,12 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blogs/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/blogs/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -358,80 +358,6 @@
 
 
 <p>原文链接：<a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/">https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/007-Memorize-Game-With-Swift/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blogs/images/avatar.gif">
-      <meta itemprop="name" content="yangq">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blogs/2026/04/19/007-Memorize-Game-With-Swift/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-04-19 21:56:10 / 修改时间：21:56:11" itemprop="dateCreated datePublished" datetime="2026-04-19T21:56:10+08:00">2026-04-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="./007-Swift-study.md">上一级</a></p>
-<h1 id="Memorize-Game-With-Swift"><a href="#Memorize-Game-With-Swift" class="headerlink" title="Memorize Game With Swift"></a>Memorize Game With Swift</h1><h2 id="2-MVVM-和-Swift-类型"><a href="#2-MVVM-和-Swift-类型" class="headerlink" title="2. MVVM 和 Swift 类型"></a>2. MVVM 和 Swift 类型</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_ inherited__">View</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span>&#123;</span><br><span class="line">        <span class="type">HStack</span>&#123;</span><br><span class="line">            <span class="type">ForEach</span>(<span class="number">0</span><span class="operator">..&lt;</span><span class="number">4</span>)&#123; index <span class="keyword">in</span></span><br><span class="line">                  <span class="type">CardView</span>(isFaceUp: <span class="literal">true</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">            .padding()</span><br><span class="line">            .foregroundColor(<span class="type">Color</span>.orange)</span><br><span class="line">        	.font(<span class="type">Font</span>.largeTitle)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">CardView</span>: <span class="title class_ inherited__">View</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> isFaceUp: <span class="type">Bool</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span>&#123;</span><br><span class="line">        <span class="type">ZStack</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> isFaceUp &#123;</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).fill(<span class="type">Color</span>.white)</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).stroke(lineWidth: <span class="number">3</span>)</span><br><span class="line">                <span class="type">Text</span>()</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).fill()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 
       
     </div>
@@ -709,7 +635,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/21/Fiber/">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2021/01/11/007-Memorize-Game-With-Swift/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blogs/images/avatar.gif">
@@ -727,7 +653,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blogs/2020/12/21/Fiber/" class="post-title-link" itemprop="url">深入浅出 React Fiber：新一代调度算法与协调机制</a>
+          <a href="/blogs/2021/01/11/007-Memorize-Game-With-Swift/" class="post-title-link" itemprop="url">学习 Swift</a>
         </h2>
 
         <div class="post-meta-container">
@@ -737,15 +663,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-21T00:00:00+08:00">2020-12-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-19 21:58:00" itemprop="dateModified" datetime="2026-04-19T21:58:00+08:00">2026-04-19</time>
+      <time title="创建时间：2021-01-11 00:00:00 / 修改时间：17:40:00" itemprop="dateCreated datePublished" datetime="2021-01-11T00:00:00+08:00">2021-01-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -757,7 +677,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a>
         </span>
     </span>
 
@@ -771,15 +691,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>详细剖析 React Fiber 架构，对比 Stack 调度与 Cooperative Scheduling 的差异，解析 Fiber Tree 的构造过程、生命周期钩子的变化以及任务优先级的调度逻辑。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blogs/2020/12/21/Fiber/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="Swift-语法"><a href="#Swift-语法" class="headerlink" title="Swift 语法"></a>Swift 语法</h1><h2 id="2-MVVM-和-Swift-类型"><a href="#2-MVVM-和-Swift-类型" class="headerlink" title="2.  MVVM 和 Swift 类型"></a>2.  MVVM 和 Swift 类型</h2><p>Swift 中不同的类型包括：<br><code>struct</code> 、<code>class</code> 、<code>functions</code> 、<code>generics 泛型</code> 、<code>protocol</code> 、<code>enum</code></p>
+<h3 id="2-1-Generics"><a href="#2-1-Generics" class="headerlink" title="2.1 Generics"></a>2.1 Generics</h3><p>并不需要关心类型的类型</p>
+<p>泛型的绝佳示例：<code>Array</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//声明 Array</span></span><br><span class="line"><span class="comment">//Element 是 类型参数（Type Parameter）</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Array</span>&lt;<span class="type">Element</span>&gt; &#123;</span><br><span class="line"> . . .</span><br><span class="line"> <span class="keyword">func</span> <span class="title function_">append</span>(<span class="keyword">_</span> <span class="params">element</span>: <span class="type">Element</span>) &#123; . . . &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用 Array 时指定类型</span></span><br><span class="line"><span class="keyword">var</span> a <span class="operator">=</span> <span class="type">Array</span>&lt;<span class="type">Int</span>&gt;()</span><br><span class="line">a.append(<span class="number">5</span>)</span><br><span class="line">a.append(<span class="number">22</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-Functions"><a href="#2-2-Functions" class="headerlink" title="2.2 Functions"></a>2.2 Functions</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//function type</span></span><br><span class="line">(<span class="type">Int</span>, <span class="type">Int</span>) -&gt; <span class="type">Bool</span>  </span><br><span class="line">(<span class="type">Double</span>) -&gt; <span class="type">Void</span> </span><br><span class="line">() -&gt; <span class="type">Array</span>&lt;<span class="type">String</span>&gt;</span><br><span class="line">() -&gt; <span class="type">Void</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo: (<span class="type">Double</span>) -&gt; <span class="type">Void</span> </span><br><span class="line"><span class="keyword">func</span> <span class="title function_">doSomething</span>(<span class="params">what</span>: () -&gt; <span class="type">Bool</span>) </span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> operation: (<span class="type">Double</span>) -&gt; <span class="type">Double</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">square</span>(<span class="params">operand</span>: <span class="type">Double</span>) -&gt; <span class="type">Double</span> &#123;</span><br><span class="line"> <span class="keyword">return</span> operand <span class="operator">*</span> operand</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">operation <span class="operator">=</span> square</span><br><span class="line"><span class="comment">//注意：不需要 operation(operand: 4)</span></span><br><span class="line"><span class="keyword">let</span> result1 <span class="operator">=</span> operation(<span class="number">4</span>)  <span class="comment">// results = 16</span></span><br><span class="line"></span><br><span class="line">operation <span class="operator">=</span> sqrt  <span class="comment">//sqrt 是 swift 内置的一个函数</span></span><br><span class="line"><span class="keyword">let</span> result2 <span class="operator">=</span> operation(<span class="number">4</span>) <span class="comment">// result2 = 2</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Swift-实战：Memorize-Game-With-Swift"><a href="#Swift-实战：Memorize-Game-With-Swift" class="headerlink" title="Swift 实战：Memorize Game With Swift"></a>Swift 实战：Memorize Game With Swift</h1><h2 id="2-MVVM-和-Swift-类型-1"><a href="#2-MVVM-和-Swift-类型-1" class="headerlink" title="2. MVVM 和 Swift 类型"></a>2. MVVM 和 Swift 类型</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_ inherited__">View</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span>&#123;</span><br><span class="line">        <span class="type">HStack</span>&#123;</span><br><span class="line">            <span class="type">ForEach</span>(<span class="number">0</span><span class="operator">..&lt;</span><span class="number">4</span>)&#123; index <span class="keyword">in</span></span><br><span class="line">                  <span class="type">CardView</span>(isFaceUp: <span class="literal">true</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">            .padding()</span><br><span class="line">            .foregroundColor(<span class="type">Color</span>.orange)</span><br><span class="line">        	.font(<span class="type">Font</span>.largeTitle)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">CardView</span>: <span class="title class_ inherited__">View</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> isFaceUp: <span class="type">Bool</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span>&#123;</span><br><span class="line">        <span class="type">ZStack</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> isFaceUp &#123;</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).fill(<span class="type">Color</span>.white)</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).stroke(lineWidth: <span class="number">3</span>)</span><br><span class="line">                <span class="type">Text</span>()</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">RoundedRectangle</span>(cornerRadius: <span class="number">10.0</span>).fill()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
       
     </div>
 
@@ -951,6 +877,102 @@
 <h3 id="connect-和-useSelector-的区别"><a href="#connect-和-useSelector-的区别" class="headerlink" title="connect 和 useSelector 的区别"></a><code>connect</code> 和 <code>useSelector</code> 的区别</h3><p>被 <code>connect</code> 包裹的组件，只有在传给它的 combined props 发生变化时，才会 re-render。通常，最终的 combined props 是 <code>&#123;...ownProps, ...stateProps, ...dispatchProps&#125;</code> 的组合。</p>
 <p> 另一方面，<code>useSelector</code> 是在函数组件内部调用的一个 hook，无法阻止组件 render。</p>
 
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/21/Fiber/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2020/12/21/Fiber/" class="post-title-link" itemprop="url">深入浅出 React Fiber：新一代调度算法与协调机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-21T00:00:00+08:00">2020-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-19 21:58:00" itemprop="dateModified" datetime="2026-04-19T21:58:00+08:00">2026-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>详细剖析 React Fiber 架构，对比 Stack 调度与 Cooperative Scheduling 的差异，解析 Fiber Tree 的构造过程、生命周期钩子的变化以及任务优先级的调度逻辑。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blogs/2020/12/21/Fiber/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
