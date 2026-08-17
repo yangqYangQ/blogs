@@ -142,12 +142,12 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blogs/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/blogs/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -261,103 +261,6 @@
 <blockquote>
 <p>[Vue warn]: Invalid event arguments: event validation failed for event “submit”.</p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2026/04/19/008-TypeScript-5.1-translation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blogs/images/avatar.gif">
-      <meta itemprop="name" content="yangq">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blogs/2026/04/19/008-TypeScript-5.1-translation/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-04-19 21:56:18" itemprop="dateCreated datePublished" datetime="2026-04-19T21:56:18+08:00">2026-04-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="undefined-返回函数的更简单隐式返回"><a href="#undefined-返回函数的更简单隐式返回" class="headerlink" title="undefined 返回函数的更简单隐式返回"></a>undefined 返回函数的更简单隐式返回</h4><p>在早期版本的 TypeScript 中，只有 <strong><code>void-</code></strong> 和 <strong><code>any-</code></strong> 返回函数可以不写 <code>return</code> 语句，这意味着即使一个函数返回 **<code>undefined</code>**，也必须显式写明 <code>return undefined</code>。</p>
-<p>TypeScript 5.1 允许返回 <code>undefined</code> 的函数没有 <code>return</code> 语句。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f4</span>(<span class="params"></span>): <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="title function_">takesFunction</span>((): <span class="function"><span class="params">undefined</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="Getters-、Setters-不相关类型"><a href="#Getters-、Setters-不相关类型" class="headerlink" title="Getters 、Setters 不相关类型"></a>Getters 、Setters 不相关类型</h4><p> TypeScript 4.3 允许 <code>getter</code>、 <code>setter</code> 访问器可以指定两种不同的类型，但是 <code>getter</code> 类型必须是 <code>setter</code> 类型的子类型。 </p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Serializer</span> &#123;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params"><span class="attr">v</span>: <span class="built_in">string</span> | <span class="built_in">number</span> | <span class="built_in">boolean</span></span>);</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">let</span> <span class="attr">box</span>: <span class="title class_">Serializer</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Allows writing a &#x27;boolean&#x27;</span></span><br><span class="line">box.<span class="property">value</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Comes out as a &#x27;string&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(box.<span class="property">value</span>.<span class="title function_">toUpperCase</span>());</span><br></pre></td></tr></table></figure>
-
-
-
-<p>TypeScript 5.1 现在允许 <code>getter</code> 、<code>setter</code> 可以有完全不相关的类型，前提是它们有显式的类型注释。</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CSSStyleRule</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Always reads as a `CSSStyleDeclaration` */</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">style</span>(): <span class="title class_">CSSStyleDeclaration</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Can only write a `string` here. */</span></span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">style</span>(<span class="params"><span class="attr">newValue</span>: <span class="built_in">string</span></span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查"><a href="#JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查" class="headerlink" title="JSX Elements 和 JSX Tag 类型之间的解耦类型检查"></a><code>JSX Elements</code> 和 <code>JSX Tag</code> 类型之间的解耦类型检查</h4><p>对于 <code>JSX</code> 组件而言，会检查是否属于 <code>JSX.Element</code> 类型。</p>
-<p>但是 <code>React</code> 未来版本可能会支持返回 <code>promise</code> 的组件，如果不放宽 <code>JSX.Element</code> 类型，现有版本的 <code>TypeScript</code> 就无法表达这一点。</p>
-<p><code>TypeScript 5.1</code> 开始使用 <strong><code>JSX.ElementType</code></strong> 类型，可以精确指定什么可以作为 <code>JSX</code> tag。</p>
-<h4 id="带名称空间的-JSX-Attributes"><a href="#带名称空间的-JSX-Attributes" class="headerlink" title="带名称空间的 JSX Attributes"></a>带名称空间的 <code>JSX Attributes</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Both of these are equivalent:</span></span><br><span class="line"><span class="keyword">const</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a:b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a</span> <span class="attr">:</span> <span class="attr">b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">FooProps</span> &#123;</span><br><span class="line">    <span class="string">&quot;a:b&quot;</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Foo</span>(<span class="params"><span class="attr">props</span>: <span class="title class_">FooProps</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props[&quot;a:b&quot;]&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>带名称空间的 <code>tag</code></p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In some library&#x27;s code or in an augmentation of that library:</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">JSX</span> &#123;</span><br><span class="line">    <span class="keyword">interface</span> <span class="title class_">IntrinsicElements</span> &#123;</span><br><span class="line">        [<span class="string">&quot;a:b&quot;</span>]: &#123; <span class="attr">prop</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In our code:</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">a:b</span> <span class="attr">prop</span>=<span class="string">&quot;hello!&quot;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>原文链接：<a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/">https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/</a></p>
 
       
     </div>
@@ -635,7 +538,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2021/01/11/007-Memorize-Game-With-Swift/">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2023/06/04/TypeScript-5.1-translation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blogs/images/avatar.gif">
@@ -653,7 +556,118 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blogs/2021/01/11/007-Memorize-Game-With-Swift/" class="post-title-link" itemprop="url">学习 Swift</a>
+          <a href="/blogs/2023/06/04/TypeScript-5.1-translation/" class="post-title-link" itemprop="url">TypeScript 5.1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-04 00:00:00 / 修改时间：18:27:00" itemprop="dateCreated datePublished" datetime="2023-06-04T00:00:00+08:00">2023-06-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="undefined-返回函数的更简单隐式返回"><a href="#undefined-返回函数的更简单隐式返回" class="headerlink" title="undefined 返回函数的更简单隐式返回"></a>undefined 返回函数的更简单隐式返回</h4><p>在早期版本的 TypeScript 中，只有 <strong><code>void-</code></strong> 和 <strong><code>any-</code></strong> 返回函数可以不写 <code>return</code> 语句，这意味着即使一个函数返回 <code>undefined</code>，也必须显式写明 <code>return undefined</code>。</p>
+<p>TypeScript 5.1 允许返回 <code>undefined</code> 的函数没有 <code>return</code> 语句。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f4</span>(<span class="params"></span>): <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Works in TypeScript 5.1!</span></span><br><span class="line"><span class="title function_">takesFunction</span>((): <span class="function"><span class="params">undefined</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// no returns</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Getters-、Setters-不相关类型"><a href="#Getters-、Setters-不相关类型" class="headerlink" title="Getters 、Setters 不相关类型"></a>Getters 、Setters 不相关类型</h4><p> TypeScript 4.3 允许 <code>getter</code>、 <code>setter</code> 访问器可以指定两种不同的类型，但是 <code>getter</code> 类型必须是 <code>setter</code> 类型的子类型。 </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Serializer</span> &#123;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params"><span class="attr">v</span>: <span class="built_in">string</span> | <span class="built_in">number</span> | <span class="built_in">boolean</span></span>);</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">let</span> <span class="attr">box</span>: <span class="title class_">Serializer</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Allows writing a &#x27;boolean&#x27;</span></span><br><span class="line">box.<span class="property">value</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Comes out as a &#x27;string&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(box.<span class="property">value</span>.<span class="title function_">toUpperCase</span>());</span><br></pre></td></tr></table></figure>
+
+
+
+<p>TypeScript 5.1 现在允许 <code>getter</code> 、<code>setter</code> 可以有完全不相关的类型，前提是它们有显式的类型注释。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CSSStyleRule</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Always reads as a `CSSStyleDeclaration` */</span></span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">style</span>(): <span class="title class_">CSSStyleDeclaration</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Can only write a `string` here. */</span></span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">style</span>(<span class="params"><span class="attr">newValue</span>: <span class="built_in">string</span></span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查"><a href="#JSX-Elements-和-JSX-Tag-类型之间的解耦类型检查" class="headerlink" title="JSX Elements 和 JSX Tag 类型之间的解耦类型检查"></a><code>JSX Elements</code> 和 <code>JSX Tag</code> 类型之间的解耦类型检查</h4><p>对于 <code>JSX</code> 组件而言，会检查是否属于 <code>JSX.Element</code> 类型。</p>
+<p>但是 <code>React</code> 未来版本可能会支持返回 <code>promise</code> 的组件，如果不放宽 <code>JSX.Element</code> 类型，现有版本的 <code>TypeScript</code> 就无法表达这一点。</p>
+<p><code>TypeScript 5.1</code> 开始使用 <strong><code>JSX.ElementType</code></strong> 类型，可以精确指定什么可以作为 <code>JSX</code> tag。</p>
+<h4 id="带名称空间的-JSX-Attributes"><a href="#带名称空间的-JSX-Attributes" class="headerlink" title="带名称空间的 JSX Attributes"></a>带名称空间的 <code>JSX Attributes</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Both of these are equivalent:</span></span><br><span class="line"><span class="keyword">const</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a:b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"><span class="keyword">const</span> y = <span class="language-xml"><span class="tag">&lt;<span class="name">Foo</span> <span class="attr">a</span> <span class="attr">:</span> <span class="attr">b</span>=<span class="string">&quot;hello&quot;</span> /&gt;</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">FooProps</span> &#123;</span><br><span class="line">    <span class="string">&quot;a:b&quot;</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Foo</span>(<span class="params"><span class="attr">props</span>: <span class="title class_">FooProps</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props[&quot;a:b&quot;]&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>带名称空间的 <code>tag</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In some library&#x27;s code or in an augmentation of that library:</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">JSX</span> &#123;</span><br><span class="line">    <span class="keyword">interface</span> <span class="title class_">IntrinsicElements</span> &#123;</span><br><span class="line">        [<span class="string">&quot;a:b&quot;</span>]: &#123; <span class="attr">prop</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In our code:</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="language-xml"><span class="tag">&lt;<span class="name">a:b</span> <span class="attr">prop</span>=<span class="string">&quot;hello!&quot;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>原文链接：<a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/">https://devblogs.microsoft.com/typescript/announcing-typescript-5-1/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2021/01/11/Memorize-Game-With-Swift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2021/01/11/Memorize-Game-With-Swift/" class="post-title-link" itemprop="url">学习 Swift</a>
         </h2>
 
         <div class="post-meta-container">
@@ -706,6 +720,102 @@
 
 
 
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/21/Fiber/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blogs/images/avatar.gif">
+      <meta itemprop="name" content="yangq">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blogs/2020/12/21/Fiber/" class="post-title-link" itemprop="url">深入浅出 React Fiber：新一代调度算法与协调机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-21T00:00:00+08:00">2020-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-19 21:58:00" itemprop="dateModified" datetime="2026-04-19T21:58:00+08:00">2026-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>详细剖析 React Fiber 架构，对比 Stack 调度与 Cooperative Scheduling 的差异，解析 Fiber Tree 的构造过程、生命周期钩子的变化以及任务优先级的调度逻辑。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blogs/2020/12/21/Fiber/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -877,102 +987,6 @@
 <h3 id="connect-和-useSelector-的区别"><a href="#connect-和-useSelector-的区别" class="headerlink" title="connect 和 useSelector 的区别"></a><code>connect</code> 和 <code>useSelector</code> 的区别</h3><p>被 <code>connect</code> 包裹的组件，只有在传给它的 combined props 发生变化时，才会 re-render。通常，最终的 combined props 是 <code>&#123;...ownProps, ...stateProps, ...dispatchProps&#125;</code> 的组合。</p>
 <p> 另一方面，<code>useSelector</code> 是在函数组件内部调用的一个 hook，无法阻止组件 render。</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yangqyangq.github.io/blogs/2020/12/21/Fiber/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blogs/images/avatar.gif">
-      <meta itemprop="name" content="yangq">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blogs/2020/12/21/Fiber/" class="post-title-link" itemprop="url">深入浅出 React Fiber：新一代调度算法与协调机制</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-21T00:00:00+08:00">2020-12-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-19 21:58:00" itemprop="dateModified" datetime="2026-04-19T21:58:00+08:00">2026-04-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/blogs/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>详细剖析 React Fiber 架构，对比 Stack 调度与 Cooperative Scheduling 的差异，解析 Fiber Tree 的构造过程、生命周期钩子的变化以及任务优先级的调度逻辑。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blogs/2020/12/21/Fiber/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
