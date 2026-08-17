@@ -1,6 +1,17 @@
+---
+title: TypeScript 5.1
+date: 2023-06-04
+tags:
+  - TypeScript
+categories:
+  - 技术教程
+  - TypeScript
+updated: 2023-06-04 18:27:00
+description: 
+---
 #### undefined 返回函数的更简单隐式返回
 
-在早期版本的 TypeScript 中，只有 **`void-`** 和 **`any-`** 返回函数可以不写 `return` 语句，这意味着即使一个函数返回 **`undefined`**，也必须显式写明 `return undefined`。
+在早期版本的 TypeScript 中，只有 **`void-`** 和 **`any-`** 返回函数可以不写 `return` 语句，这意味着即使一个函数返回 `undefined`，也必须显式写明 `return undefined`。
 
 TypeScript 5.1 允许返回 `undefined` 的函数没有 `return` 语句。
 
