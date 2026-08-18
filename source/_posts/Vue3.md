@@ -1,7 +1,17 @@
+---
+title: Vue3 API
+date: 2023-08-28
+tags:
+  - Vue3
+categories:
+  - 技术教程
+  - 前端开发
+updated: 2023-08-28 18:10:00
+description: 
+---
 ### Composition API
 
-  ![image-20230825171533325](../assets/009/image-20230825171533325.png)
-
+{% asset_img image-20230825171533325.png "Composition API" %}
 
 
 #### Reactivity
